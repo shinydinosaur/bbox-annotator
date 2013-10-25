@@ -1,0 +1,51 @@
+<html>
+<head>
+<title>Bounding box annotator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.css" />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.js"></script>
+
+<!-- Bootstrap -->
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+<!-- Optional theme -->
+<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+<!-- bbox annotator library -->
+<script src="bbox_annotator/bbox_annotator.js"></script>
+
+<!-- local scripts -->
+<script src="js/picasso-annotator.js"></script>
+</head>
+<body>
+<div class="container">
+<div class="page-header">
+	<h1>Draw a box around each person in the image.</h1>
+</div>
+<div class="progress">
+	<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+		<span class="sr-only">60% Complete</span>
+	</div>
+</div>
+<div id="bbox_annotator" style="display:inline-block"></div>
+<!--<div style="display:inline-block;vertical-align:top;"> -->
+	<!-- use this text area to show the annotation data when debugging -->
+<!--
+  <div>
+    <textarea id="annotation_data" name="annotation" rows="30" cols="50" style="font-family:monospace;" readonly></textarea>
+</div>
+-->
+  <div>
+    <input id="reset_button" type="reset" class="btn"/>
+  </div>
+  <!-- </div> -->
+
+<!-- here comes the question about human-like -->
+
+<!-- and a Next button -->
+</div> <!-- containter -->
+</body>
+</html>

@@ -1,10 +1,10 @@
 <html>
 <head>
 <title>Bounding box annotator demo</title>
-<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.css" />
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.js"></script>
-<script src="bbox_annotator.js"></script>
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.css" />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.js"></script>
+<script src="bbox_annotator/bbox_annotator.js"></script>
 </head>
 <body>
 
@@ -23,7 +23,7 @@
 $(document).ready(function() {
   // Initialize the bounding-box annotator.
   var annotator = new BBoxAnnotator({
-    url: "/url/to/image.jpg",
+    url: "[path to image].jpg",
     input_method: 'fixed',    // Can be one of ['text', 'select', 'fixed']
     labels: "object",
     onchange: function(entries) {
@@ -33,10 +33,13 @@ $(document).ready(function() {
       $("#annotation_data").text(JSON.stringify(entries, null, "  "));
     }
   });
+  
   // Initialize the reset button.
   $("#reset_button").click(function(e) {
     annotator.clear_all();
   })
+
+  
 });
 </script>
 
