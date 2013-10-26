@@ -1,12 +1,15 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <title>Bounding box annotator</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.css" />
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.js"></script>
 
 <!-- Bootstrap -->
+<!-- ensure propper viewing on mobile devices -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
 <!-- Optional theme -->
@@ -21,6 +24,7 @@
 <script src="js/picasso-annotator.js"></script>
 </head>
 <body>
+<!-- Bootstrap element to center the contents of the page -->
 <div class="container">
 <div class="page-header">
 	<h1>Draw a box around each person in the image.</h1>
@@ -30,7 +34,8 @@
 		<span class="sr-only">60% Complete</span>
 	</div>
 </div>
-<div id="bbox_annotator" style="display:inline-block"></div>
+<!--<div id="bbox_annotator" style="display:inline-block"></div> -->
+<div id="bbox_annotator"></div>
 <!--<div style="display:inline-block;vertical-align:top;"> -->
 	<!-- use this text area to show the annotation data when debugging -->
 <!--
@@ -39,13 +44,35 @@
 </div>
 -->
   <div>
-    <input id="reset_button" type="reset" class="btn"/>
+    <input id="reset_button" type="reset" class="btn btn-default"/>
   </div>
   <!-- </div> -->
 
 <!-- here comes the question about human-like -->
-
+<div>
+<p class="lead">
+	How hard is it to identify the figures in this image as human?
+</p>
+<div class="btn-group" data-toggle="buttons">
+  <label class="btn btn-primary">
+	<input type="radio" name="options" id="Very Easy"> Very easy
+  </label>
+  <label class="btn btn-primary">
+	<input type="radio" name="options" id="Somewhat Easy"> Somewhat easy
+  </label>
+  <label class="btn btn-primary">
+	<input type="radio" name="options" id="Neither Easy Nor Hard"> Neither easy nor hard
+  </label>
+  <label class="btn btn-primary">
+	<input type="radio" name="options" id="Somewhat Easy"> Somewhat hard
+  </label>
+  <label class="btn btn-primary">
+	<input type="radio" name="options" id="Somewhat Easy"> Very hard
+  </label>
+</div>
+</div>
 <!-- and a Next button -->
+<input class="btn btn-default" type="submit" value="Next">
 </div> <!-- containter -->
 </body>
 </html>
