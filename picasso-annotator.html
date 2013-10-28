@@ -57,13 +57,15 @@
 	</div>
 </div>
 
-<!-- here comes the question about human-like -->
 <br/>
+<form role="form">
+<!-- here comes the question about human-like -->
 <div>
 <p class="lead">
 	How hard is it to identify the figures in this image as human?
 </p>
-<div class="btn-group" data-toggle="buttons">
+<input type="hidden" id="bucket" value="" />
+<div class="btn-group bucket" data-toggle="buttons" id="buckets">
   <label class="btn btn-primary">
 	<input type="radio" name="options" id="Very Easy"> Very easy
   </label>
@@ -83,8 +85,9 @@
 </div>
 <!-- and a Next button -->
 <div>
-	<input class="btn btn-default pull-right" type="submit" value="Next painting">
+	<input class="btn btn-default pull-right" id="submit" type="submit" value="Next painting">
 </div>
+</form>
 <footer>
 <br/> 
 <br/> 
