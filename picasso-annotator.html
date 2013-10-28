@@ -29,26 +29,36 @@
 <div class="page-header">
 	<h1>Draw a box around each person in the image.</h1>
 </div>
-<div class="progress">
-	<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-		<span class="sr-only">60% Complete</span>
+<div class="row">
+	<div class="col-md-8">
+		<div id="bbox_annotator"></div>
 	</div>
-</div>
-<!--<div id="bbox_annotator" style="display:inline-block"></div> -->
-<div id="bbox_annotator"></div>
-<!--<div style="display:inline-block;vertical-align:top;"> -->
+	<div class="col-md-4">
+		<p>
+			Progress: 
+		</p>
+		<div class="progress">
+			<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+				<span class="sr-only">60% Complete</span>
+			</div>
+		</div>
+		<p>
+			Reset all selections: 
+		</p>
+  		<div>
+    		<input id="reset_button" type="reset" class="btn btn-default"/>
+  		</div>
 	<!-- use this text area to show the annotation data when debugging -->
 <!--
   <div>
     <textarea id="annotation_data" name="annotation" rows="30" cols="50" style="font-family:monospace;" readonly></textarea>
 </div>
 -->
-  <div>
-    <input id="reset_button" type="reset" class="btn btn-default"/>
-  </div>
-  <!-- </div> -->
+	</div>
+</div>
 
 <!-- here comes the question about human-like -->
+<br/>
 <div>
 <p class="lead">
 	How hard is it to identify the figures in this image as human?
@@ -72,7 +82,13 @@
 </div>
 </div>
 <!-- and a Next button -->
-<input class="btn btn-default" type="submit" value="Next">
+<div>
+	<input class="btn btn-default pull-right" type="submit" value="Next painting">
+</div>
+<footer>
+<br/> 
+<br/> 
+</footer>
 </div> <!-- containter -->
 </body>
 </html>
