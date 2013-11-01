@@ -18,7 +18,7 @@ $(document).ready(function() {
   // Initialize the reset button.
   $("#reset_button").click(function(e) {
     annotator.clear_all();
-  })
+  });
 
   // When a button is clicked in the is this human? buckets question.
   $("#buckets").button(function() {
@@ -30,5 +30,5 @@ $(document).ready(function() {
   	// entries, bucket, time
 	var t1 = window.performance.now();
 	var time = t1-t0; // in milliseconds
-  }
+  });
 });
