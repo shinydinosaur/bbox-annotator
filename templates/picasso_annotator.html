@@ -1,3 +1,4 @@
+$def with (current_image)
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,10 +19,10 @@
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 
 <!-- bbox annotator library -->
-<script src="bbox_annotator/bbox_annotator.js"></script>
+<script src="static/js/bbox_annotator.js"></script>
 
 <!-- local scripts -->
-<script src="js/picasso-annotator.js"></script>
+<script src="static/js/picasso_annotator.js"></script>
 </head>
 <body>
 <!-- Bootstrap element to center the contents of the page -->
@@ -49,42 +50,39 @@
     		<input id="reset_button" type="reset" class="btn btn-default"/>
   		</div>
 	<!-- use this text area to show the annotation data when debugging -->
-<!--
-  <div>
-    <textarea id="annotation_data" name="annotation" rows="30" cols="50" style="font-family:monospace;" readonly></textarea>
-</div>
--->
 	</div>
 </div>
 
 <br/>
-<form role="form">
+<form id="myform" method="post" action="/">
 <!-- here comes the question about human-like -->
 <div>
 <p class="lead">
 	How hard is it to identify the figures in this image as human?
 </p>
-<input type="hidden" id="bucket" value="" />
-<div class="btn-group bucket" data-toggle="buttons" id="buckets">
+<div class="btn-group" data-toggle="buttons" id="buckets">
   <label class="btn btn-primary">
-	<input type="radio" name="options" id="Very Easy"> Very easy
+	<input type="radio" name="bucket" id="Very easy" value="1"/> Very easy
   </label>
   <label class="btn btn-primary">
-	<input type="radio" name="options" id="Somewhat Easy"> Somewhat easy
+	<input type="radio" name="bucket" id="Somewhat easy" value="2"/> Somewhat easy
   </label>
   <label class="btn btn-primary">
-	<input type="radio" name="options" id="Neither Easy Nor Hard"> Neither easy nor hard
+	<input type="radio" name="bucket" id="Neither easy nor hard" value="3"/> Neither easy nor hard
   </label>
   <label class="btn btn-primary">
-	<input type="radio" name="options" id="Somewhat Easy"> Somewhat hard
+	<input type="radio" name="bucket" id="Somewhat hard" value="4"/> Somewhat hard
   </label>
   <label class="btn btn-primary">
-	<input type="radio" name="options" id="Somewhat Easy"> Very hard
+	<input type="radio" name="bucket" id="Very hard" value="5"/> Very hard
   </label>
 </div>
 </div>
 <!-- and a Next button -->
 <div>
+    	<input id="annotation_data" type="hidden" name="entries"/>
+	<input type="hidden" id="time" value="" name="time"/>
+	<input type="hidden" id="imgid" value="$current_image" name="imgid"/>
 	<input class="btn btn-default pull-right" id="submit" type="submit" value="Next painting">
 </div>
 </form>
