@@ -12,7 +12,12 @@ urls = (
 render = web.template.render('templates/')
 db = web.database(dbn='postgres', user='picasso', pw='picasso', db='picasso_annotations')
 app = web.application(urls, globals())
-session = web.session.Session(app, web.session.DiskStore('sessions'))
+
+if web.config.get('_session') is None: 
+  session = web.session.Session(app, web.session.DiskStore('sessions')) 
+  web.config._session = session 
+else: 
+  session = web.config._session 
 
 NUM_USERS = 30
 IMAGE_DIR = "static/img/"
@@ -29,34 +34,42 @@ class index:
     images = all_images[start:end]
     if end > len(all_images):
         images.extend(all_images[0:end-len(all_images)])
-    return images
-    
+    return images    
 
   def GET(self):
-    uid = session.get('uid', None)
-    if not uid:
+    if not session.get('uid'):
       session.uid = db.insert('users')
-    images = self.user_images(session.uid)
-    myvar = {"userid": session.uid}
+    uid = session.uid
+    images = self.user_images(uid)
+
     # figure out which images this user already annotated
-    done_images = db.select('tasks', myvar,  what='imgid', where="userid = $userid")
+    query_context = {"userid": uid}
+    done_images = [result['imgid'] for result in
+                   db.select('tasks', query_context,  what='imgid', where="userid = $userid")]
+    remaining_images = list(set(images)-set(done_images))
+    if not remaining_images:
+      return render.done()
+
     # pick at random one of the images that was not yet annotated by this user
     current_image = random.choice(list(set(images)-set(done_images)))
     return render.picasso_annotator(current_image)
 
   def POST(self):
     i = web.input()
-    # task: user/image
-    uid = session.get('uid', None)
+    uid = session.get('uid')
     if not uid:
       return "error: no session id"
-    taskid = db.insert('tasks', userid=uid, imgid=i.imgid, time=float(i.time), difficulty=int(i.bucket))
+
+    # task: user/image
+    taskid = db.insert('tasks', userid=uid, imgid=i.imgid, 
+                       time=float(i.time), difficulty=int(i.bucket))
+
     # annotation: user/image/object
     entries = json.loads(i.entries) 
     for box in entries:
        n = db.insert('annotations', userid=uid, imgid=i.imgid, taskid=taskid,
                      bbox_left=box["left"], bbox_top=box["top"], bbox_width=box["width"], bbox_height=box["height"]),
-    return self.GET()
+    raise web.seeother('/')
 
 if __name__ == "__main__":
   if len(sys.argv) == 1:
