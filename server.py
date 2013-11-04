@@ -51,8 +51,9 @@ class index:
       return render.done()
 
     # pick at random one of the images that was not yet annotated by this user
-    current_image = random.choice(list(set(images)-set(done_images)))
-    return render.picasso_annotator(current_image)
+    current_image = random.choice(remaining_images)
+    progress = 100 * float(len(done_images)) / len(images)
+    return render.picasso_annotator(current_image, progress)
 
   def POST(self):
     i = web.input()

@@ -1,4 +1,4 @@
-$def with (current_image)
+$def with (current_image, progress)
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,8 +39,8 @@ $def with (current_image)
 			Progress: 
 		</p>
 		<div class="progress">
-			<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-				<span class="sr-only">60% Complete</span>
+			<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: $progress%;">
+				<span class="sr-only">$progress% Complete</span>
 			</div>
 		</div>
 		<p>
