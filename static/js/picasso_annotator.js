@@ -22,17 +22,30 @@ $(document).ready(function() {
     annotator.clear_all();
   });
 
-  // When a button is clicked in the is this human? buckets question.
-  $("#buckets").button(function() {
-  	$("#bucket").val($(this).text());
-  });
-
   $("#submit").click(function() { 
-  	// how are we passing data?
-  	// entries, bucket, time
-	var t1 = window.performance.now();
-	$("#imgid").val(imgid);
-	$("#time").val(t1-t0); // in milliseconds
-	$("#myform").trigger("submit");
+      // how are we passing data?
+      // entries, bucket, time
+
+      // do some validation
+      // Must pick a bucket
+      if ($("#buckets :checked").val() == undefined) {
+	  alert("MUST PICK A BUCKET!");
+	  event.preventDefault();
+	  return;
+      } 
+
+      // Must box at least one object
+      var annotations = $("#annotation_data").val();
+      if (annotations == "" || annotations == "[]") {
+	  alert("MUST BOX AT LEAST ONE OBJECT!");
+	  event.preventDefault();	   
+	  return;
+      } 
+
+      // set hidden forms and submit.
+      var t1 = window.performance.now();
+      $("#imgid").val(imgid);
+      $("#time").val(t1-t0); // in milliseconds
+      $("#myform").trigger("submit");
   });
 });
