@@ -28,19 +28,23 @@ $(document).ready(function() {
 
       // do some validation
       // Must pick a bucket
+      var err_msg = "";
       if ($("#buckets :checked").val() == undefined) {
-	  alert("MUST PICK A BUCKET!");
-	  event.preventDefault();
-	  return;
+	  err_msg = "Please provide an answer to the difficulty question.";
       } 
 
       // Must box at least one object
       var annotations = $("#annotation_data").val();
       if (annotations == "" || annotations == "[]") {
-	  alert("MUST BOX AT LEAST ONE OBJECT!");
-	  event.preventDefault();	   
-	  return;
+	  err_msg = "Please draw a box around at least one object.";
       } 
+
+      if (err_msg != "") {
+	  $("#validation_error").text(err_msg);
+	  $("#validation_div").removeClass("hidden");
+	  event.preventDefault();
+	  return;
+      }
 
       // set hidden forms and submit.
       var t1 = window.performance.now();

@@ -30,6 +30,7 @@ $def with (current_image, progress)
 <div class="page-header">
 	<h1>Draw a box around each person in the image.</h1>
 </div>
+
 <div class="row">
 	<div class="col-md-8">
 		<div id="bbox_annotator"></div>
@@ -54,6 +55,8 @@ $def with (current_image, progress)
 </div>
 
 <br/>
+
+<div class="row">
 <form id="myform" method="post" action="/">
 <!-- here comes the question about human-like -->
 <div>
@@ -85,6 +88,14 @@ $def with (current_image, progress)
 	<input type="hidden" id="imgid" value="$current_image" name="imgid"/>
 	<input class="btn btn-default pull-right" id="submit" type="submit" value="Next painting" />
 </div>
+</div>
+<!-- div for validation errors. -->
+<div class="row">
+<div class="alert alert-danger pull-right hidden" id="validation_div">
+  <strong>Error! </strong><span id="validation_error"></span>
+</div>
+</div>
+
 </form>
 <footer>
 <br/> 
