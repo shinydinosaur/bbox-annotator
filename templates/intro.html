@@ -31,16 +31,30 @@
 				</p>
 			</div>
 			<div>
-				<dl class="dl-horizontal">
+				<dl>
 					<dt>High level</dt>
 				  	<dd>For each painting you will be asked to do two things:
 				  		<ol>
-							<li>Draw a bounding box around each person that appears in the painting.</li>
-							<li>Tell us how hard or easy it was to identify the figures in the paintings as human (aka are they photorealistic?).</li>
+							<div class="row">
+								<div class="col-md-6">
+									<li>Draw a bounding box around each person that appears in the painting. (Note that you may need to draw more than one box per painting).</li>
+								</div>
+								<div class="col-md-6">
+									<img src="imgs/bbox.png" width="140" alt="Example bounding box" class="img">
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6">
+									<li>Tell us how hard or easy it was to identify the figures in the paintings as human (aka are they photorealistic?).
+								</div>
+								<div class="col-md-6">
+									<img src="imgs/buttons.png" width="400" alt="Example buttons" class="img">
+								</div>
+							</li>
 						</ol>
 					</dd>
 				</dl>
-				<dl class="dl-horizontal">
+				<dl>
 					<dt>What to label?</dt>
 					<dd>All <strong>people</strong> in the paintings, unless:
 						<ul>
@@ -50,7 +64,7 @@
 						</ul>
 					</dd>
 				</dl>
-				<dl class="dl-horizontal">
+				<dl>
 					<dt>Bounding box</dt>
 					<dd>Mark the bounding box of the <strong>visible</strong> area of the person (<strong>not</strong> the estimated total extent of the person).
 					The bounding box should contain all visible pixels, except where the bounding box would have to be made excessively large to include a few additional pixels (less than 5% of the person).</dd>
