@@ -6,7 +6,8 @@ import math
 import random
 
 urls = (
-  '/', 'index'
+  '/', 'index',
+  '/intro', 'intro'
 )
 
 render = web.template.render('templates/')
@@ -21,6 +22,10 @@ else:
 
 NUM_USERS = 30
 IMAGE_DIR = "static/data/img/"
+
+class intro:
+  def GET(self):
+    return render.intro()
 
 class index:
   def user_images(self, uid):
@@ -41,7 +46,7 @@ class index:
 
       # new session: show intro
       session.uid = db.insert('users')
-      return render.intro()
+      raise web.seeother('/intro')
 
     uid = session.uid
     images = self.user_images(uid)
