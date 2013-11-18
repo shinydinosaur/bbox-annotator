@@ -20,7 +20,7 @@ else:
   session = web.config._session 
 
 NUM_USERS = 30
-IMAGE_DIR = "static/img/"
+IMAGE_DIR = "static/data/img/"
 
 class index:
   def user_images(self, uid):
@@ -38,7 +38,11 @@ class index:
 
   def GET(self):
     if not session.get('uid'):
+
+      # new session: show intro
       session.uid = db.insert('users')
+      return render.intro()
+
     uid = session.uid
     images = self.user_images(uid)
 
