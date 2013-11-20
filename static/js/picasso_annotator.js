@@ -1,8 +1,22 @@
 $(document).ready(function() {
+
+  function getURLParameter(name) {
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null
+    }
+
+  // if we have an imgid in our url, ignore the random id we got from the backend
+  url_imgid = getURLParameter('imgid');
+  if (url_imgid) {
+    $("#imgid").val(url_imgid);
+  }
+
   // grab some timing info
   var t0 = window.performance.now();
   //var imgid =  "static/img/A-Young-Faun-Playing-a-Serenade-to-a-Young-Girl-1938.JPG";
   var imgid = $("#imgid").val();
+
+  // throw the image id into the url to control refresh behavior
+  history.replaceState({}, "", "/?imgid="+imgid);
 
   // Initialize the bounding-box annotator.
   var annotator = new BBoxAnnotator({
