@@ -1,3 +1,4 @@
+$def with (nobutton)
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -75,7 +76,8 @@
 					</dd>
 				</dl>
 			</div>
-			<a class="btn btn-default pull-right" href="/">Start study</a>
+			$if not nobutton:
+				<a class="btn btn-default pull-right" href="/">Start study</a>
 		</div>
 		<div class="col-md-2">
 		</div>

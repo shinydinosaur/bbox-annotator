@@ -25,7 +25,7 @@ IMAGE_DIR = "static/data/img/"
 
 class intro:
   def GET(self):
-    return render.intro()
+    return render.intro(web.input(nobutton=False).nobutton)
 
 class index:
   def user_images(self, uid):
