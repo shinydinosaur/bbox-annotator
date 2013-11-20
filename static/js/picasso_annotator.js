@@ -44,7 +44,7 @@ $(document).ready(function() {
       // Must pick a bucket
       var err_msg = "";
       if ($("#buckets :checked").val() == undefined) {
-	  err_msg = "Please provide an answer to the difficulty question.";
+	  err_msg = "Please provide an answer to the lifelike question.";
       } 
 
       // Must box at least one object
