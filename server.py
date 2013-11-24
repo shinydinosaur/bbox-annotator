@@ -35,7 +35,7 @@ class index:
     all_images = [IMAGE_DIR + i for i in os.listdir(IMAGE_DIR)]
     window_sz = int(math.ceil(len(all_images)/float(NUM_USERS)))
     start = (uid-1)*window_sz
-    end = start+int(math.ceil(len(all_images)/3.0))
+    end = start+int(math.ceil(len(all_images)*2.0/3.0))
     images = all_images[start:end]
     if end > len(all_images):
         images.extend(all_images[0:end-len(all_images)])
