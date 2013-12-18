@@ -23,7 +23,7 @@ for i = 1:length(img_names)
         u_ann = single_img_annotations(single_img_annotations.userid == users(u),:);
         % bboxes an M-by-4 matrix defining M bounding boxes
         % containing the detected objects each with [x,y,w,h] format.
-        bboxes = [u_ann.bbox_left, u_ann.bbox_top, u_ann.bbox_width, u_ann.bbox_height]; % bug when more than one annotations per user?
+        bboxes = [u_ann.bbox_left, u_ann.bbox_top, u_ann.bbox_width, u_ann.bbox_height];
         I = insertObjectAnnotation(I, 'rectangle', bboxes, u_ann.userid, 'Color', 255*colors(u,:));
     end
     figure
