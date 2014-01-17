@@ -11,7 +11,7 @@ from matplotlib.patches import Rectangle
 
 ANNOTATION_PATH = 'user_annotations_new.csv'
 IMAGE_DIR = '/Users/dhaas/Code/projects/Art_Vision/Picasso/People/'
-PCT_IMAGES_TO_PLOT = 0
+PCT_IMAGES_TO_PLOT = 20
 
 COLOR_MAP = {
     -1: 'k',
@@ -110,6 +110,20 @@ def cluster_annotations(annotations):
     return [(annotations[i], cluster_index) 
             for i, cluster_index in enumerate(cluster_assignments)]
 
+def median_annotation(annotations):
+    left = np.median([annotation[0].left for annotation in annotations])
+    top = np.median([annotation[0].top for annotation in annotations])
+    right =  np.median([annotation[0].left + annotation[0].width for annotation in annotations])
+    bottom =  np.median([annotation[0].top + annotation[0].height for annotation in annotations])
+    return Annotation({
+        'imgid': annotations[0][0].imgid,
+        'userid': -1,
+        'bbox_left': left,
+        'bbox_top': top,
+        'bbox_width': right - left,
+        'bbox_height': bottom - top,
+    })
+
 def plot_annotations(imgid, clustered_annotations):
     try:
         img = mpimg.imread(IMAGE_DIR + imgid)
@@ -118,8 +132,9 @@ def plot_annotations(imgid, clustered_annotations):
         print "WARNING: couldn't find image '%s'" % imgid
         return False
 
+    # Plot all annotations
     fig = plt.figure()
-    ax = fig.add_subplot(111)
+    ax = plt.gca()
     plt.imshow(img)
     for annotation, cluster_id in clustered_annotations:
         color = COLOR_MAP[cluster_id]
@@ -127,6 +142,20 @@ def plot_annotations(imgid, clustered_annotations):
                          annotation.width, annotation.height, fill=False, color=color)
         ax.add_patch(rect)
     plt.show()
+
+    # Plot median annotations
+    by_cluster = annotations_by_cluster(clustered_annotations)
+    medians = { clusterid : median_annotation(annotations) 
+                for clusterid, annotations in by_cluster.iteritems() }
+    plt.figure()
+    ax = plt.gca()
+    plt.imshow(img)
+    for clusterid, median in medians.iteritems():
+        color = COLOR_MAP[clusterid]
+        rect = Rectangle((median.left, median.top),
+                         median.width, median.height, fill=False, color=color)
+        ax.add_patch(rect)
+    plt.show()                    
     return True
 
 def annotations_by_user(annotations, userids=None):
