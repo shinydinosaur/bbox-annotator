@@ -1,5 +1,6 @@
 import csv
 import random
+import os
 import numpy as np
 from itertools import combinations
 from sklearn.cluster import KMeans
@@ -11,13 +12,15 @@ from matplotlib.patches import Rectangle
 
 ANNOTATION_PATH = 'user_annotations_new.csv'
 IMAGE_DIR = '/Users/dhaas/Code/projects/Art_Vision/Picasso/People/'
-PCT_IMAGES_TO_PLOT = 20
+MEDIAN_PATH = 'cluster_medians.csv'
+PCT_IMAGES_TO_PLOT = 0
+RESULTS_PATH = 'results'
 
 COLOR_MAP = {
     -1: 'k',
-    0: 'r', 
-    1: 'b', 
-    2: 'g', 
+    0: 'r',
+    1: 'b',
+    2: 'g',
     3: 'c',
     4: 'm',
     5: 'y',
@@ -35,6 +38,20 @@ class Annotation(object):
 
     def area(self):
         return self.width * self.height
+
+    def centroid(self):
+        return ((self.left + self.width) / 2.0,
+                (self.top + self.height) / 2.0)
+
+    def feature_vector(self):
+        # try clustering on the centroids of the boxes
+        # return self.centroid()
+
+        # try clustering on all corners of the boxes
+        return np.array((self.left,
+                         self.left + self.width,
+                         self.top,
+                         self.top + self.height))
 
     def intersects(self, other_annotation):
         # Self is fully to the right of other_annotation.
@@ -61,14 +78,20 @@ class Annotation(object):
             return 0.0
         intersection_left = max((self.left, other_annotation.left))
         intersection_top = max((self.top, other_annotation.top))
-        intersection_right = min((self.left + self.width, other_annotation.left + other_annotation.width))
-        intersection_bottom = min((self.top + self.height, other_annotation.top + other_annotation.height))
+        intersection_right = min((
+            self.left + self.width,
+            other_annotation.left + other_annotation.width))
+        intersection_bottom = min((
+            self.top + self.height,
+            other_annotation.top + other_annotation.height))
         intersection_width = intersection_right - intersection_left
         intersection_height = intersection_bottom - intersection_top
         return intersection_width * intersection_height
 
     def union_size(self, other_annotation):
-        return self.area() + other_annotation.area() - self.intersection_size(other_annotation)
+        return (self.area()
+                + other_annotation.area()
+                - self.intersection_size(other_annotation))
 
 def parse_annotations(annotation_file):
     annotations = {}
@@ -82,39 +105,41 @@ def parse_annotations(annotation_file):
     return annotations
 
 def cluster_annotations(annotations):
-    # try clustering on the centroids of the boxes
-    # X = np.array([((annotation.left + annotation.width) / 2.0, 
-    #                (annotation.top + annotation.height) / 2.0)
-    #               for annotation in annotations])
+    X = [annotation.feature_vector() for annotation in annotations]
+    by_user = annotations_by_user(zip(annotations, range(len(annotations))))
+    num_per_user = [len(by_user[user]) for user in by_user]
+    print (len(by_user), np.mean(num_per_user),
+           np.var(num_per_user), np.median(num_per_user))
 
-    # try clustering on all corners of the boxes
-    X = np.array([(annotation.left, 
-                   annotation.left + annotation.width, 
-                   annotation.top,
-                   annotation.top + annotation.height)
-                  for annotation in annotations])
+    # try DBSCAN clustering
+    # hack because annotations_by_user expects clusterids as well.
+    #model = DBSCAN(eps=49.0, # TUNE THIS
+    #               min_samples=len(by_user)/4.0)
 
-    # try k-means with 2 clusters
-    #model = KMeans(n_clusters=2, init='random')
-    
-    # try DBSCAN clustering 
-    model = DBSCAN(eps=50.0, # TUNE THIS
-                   # TODO: some function of the number of users who annotated this image
-                   min_samples = 4)
-    
-    # try affinity propagation
-    # model = AffinityPropagation(damping=0.95) # TUNE ME
+    # try k-means, using the median annotations per user as the number of
+    # clusters, and a random users' annotations as initial points.
+    n_clusters=np.round(np.median(num_per_user))
+    potential_user_annotations = [annotation_list
+                                  for annotation_list in by_user.values()
+                                  if len(annotation_list) == n_clusters]
+    init_points = [anno_tuple[0].feature_vector()
+                   for anno_tuple in random.choice(potential_user_annotations)]
 
-    # TODO(dhaas): figure out n_clusters, modify init if we have more info.
+    model = KMeans(n_clusters=int(np.median(num_per_user)),
+                   init=np.array(init_points))
+
     cluster_assignments = model.fit_predict(X)
-    return [(annotations[i], cluster_index) 
+    print list(cluster_assignments).count(-1) / float(len(cluster_assignments))
+    return [(annotations[i], cluster_index)
             for i, cluster_index in enumerate(cluster_assignments)]
 
 def median_annotation(annotations):
     left = np.median([annotation[0].left for annotation in annotations])
     top = np.median([annotation[0].top for annotation in annotations])
-    right =  np.median([annotation[0].left + annotation[0].width for annotation in annotations])
-    bottom =  np.median([annotation[0].top + annotation[0].height for annotation in annotations])
+    right =  np.median([annotation[0].left + annotation[0].width
+                        for annotation in annotations])
+    bottom =  np.median([annotation[0].top + annotation[0].height
+                         for annotation in annotations])
     return Annotation({
         'imgid': annotations[0][0].imgid,
         'userid': -1,
@@ -123,6 +148,22 @@ def median_annotation(annotations):
         'bbox_width': right - left,
         'bbox_height': bottom - top,
     })
+
+def save_medians(clustered_annotations):
+    by_cluster = annotations_by_cluster(clustered_annotations)
+    medians = { clusterid : median_annotation(annotations)
+                for clusterid, annotations in by_cluster.iteritems() }
+    with open(MEDIAN_PATH, 'ab') as csvfile:
+        writer = csv.DictWriter(csvfile,
+                                fieldnames=['imgid', 'clusterid',
+                                            'left', 'top', 'width', 'height'])
+        writer.writerows([{'imgid': imgid,
+                           'clusterid': clusterid,
+                           'left': anno.left,
+                           'top': anno.top,
+                           'width': anno.width,
+                           'height': anno.height}
+                          for clusterid, anno in medians.iteritems()])
 
 def plot_annotations(imgid, clustered_annotations):
     try:
@@ -139,13 +180,14 @@ def plot_annotations(imgid, clustered_annotations):
     for annotation, cluster_id in clustered_annotations:
         color = COLOR_MAP[cluster_id]
         rect = Rectangle((annotation.left, annotation.top),
-                         annotation.width, annotation.height, fill=False, color=color)
+                         annotation.width, annotation.height,
+                         fill=False, color=color)
         ax.add_patch(rect)
     plt.show()
 
     # Plot median annotations
     by_cluster = annotations_by_cluster(clustered_annotations)
-    medians = { clusterid : median_annotation(annotations) 
+    medians = { clusterid : median_annotation(annotations)
                 for clusterid, annotations in by_cluster.iteritems() }
     plt.figure()
     ax = plt.gca()
@@ -155,7 +197,7 @@ def plot_annotations(imgid, clustered_annotations):
         rect = Rectangle((median.left, median.top),
                          median.width, median.height, fill=False, color=color)
         ax.add_patch(rect)
-    plt.show()                    
+    plt.show()
     return True
 
 def annotations_by_user(annotations, userids=None):
@@ -174,24 +216,29 @@ def annotations_by_cluster(annotations, clusterids=None):
             if cluster_id not in by_cluster:
                 by_cluster[cluster_id] = []
             by_cluster[cluster_id].append((annotation, cluster_id))
-    return by_cluster        
+    return by_cluster
 
 def overlap_error_score(user1_annotation, user2_annotation):
     # compute as 1 - box intersection / box union (this is bi-directional)
-    return 1.0 - (user1_annotation.intersection_size(user2_annotation) / user1_annotation.union_size(user2_annotation))
+    return 1.0 - (user1_annotation.intersection_size(user2_annotation)
+                  / user1_annotation.union_size(user2_annotation))
 
 if __name__ == '__main__':
     annotations = parse_annotations(ANNOTATION_PATH)
     scores = {}
     fps = {}
     fns = {}
+    if os.path.exists(MEDIAN_PATH):
+        os.unlink(MEDIAN_PATH)
     for imgid, annotation_list in annotations.iteritems():
-        
-        # cluster the annotations
+
+        # cluster the annotations, and save their medians to disk
         clustered_annotations = cluster_annotations(annotation_list)
+        save_medians(clustered_annotations)
+
         if random.random() < PCT_IMAGES_TO_PLOT / 100.0:
-            plotted = plot_annotations(imgid, clustered_annotations)        
-        
+            plotted = plot_annotations(imgid, clustered_annotations)
+
         # compute pairwise error scores for each figure
         by_cluster = annotations_by_cluster(clustered_annotations)
         all_users = annotations_by_user(clustered_annotations).keys()
@@ -211,20 +258,22 @@ if __name__ == '__main__':
             for cluster_id, annotation_list in by_cluster.iteritems():
                 u1_false_positives = u2_false_positives = 0
                 u1_false_negatives = u2_false_negatives = 0
-                user_annotations = annotations_by_user(annotation_list, [user1, user2])
+                user_annotations = annotations_by_user(annotation_list,
+                                                       [user1, user2])
 
                 # Handle the outlier cluster--these are all false positives.
-                if cluster_id == -1: 
+                if cluster_id == -1:
                     u1_false_positives += len(user_annotations[user1])
                     u2_false_positives += len(user_annotations[user2])
                     false_positives[u1_key] = u1_false_positives
                     false_positives[u2_key] = u2_false_positives
                     continue
 
-                # Handle False negatives: users didn't draw a box for this figure.
+                # Handle False negatives: users didn't draw a box for this
+                # figure.
                 overlap_possible = True
                 if len(user_annotations[user1]) == 0:
-                    u1_false_negatives += 1 
+                    u1_false_negatives += 1
                     overlap_possible = False
                 if len(user_annotations[user2]) == 0:
                     u2_false_negatives += 1
@@ -236,37 +285,47 @@ if __name__ == '__main__':
 
                 # Otherwise, overlap scores
                 if len(user_annotations[user1]) != 1:
-                    # Either user accidentally drew too many rectangles or algorithm
-                    # misclassified a rectangle because it was too close to the cluster.
-                    # Either way, pick a random rectangle to evaluate.
-                    user_annotations[user1][0] = random.choice(user_annotations[user1])
+                    # Either user accidentally drew too many rectangles or
+                    # algorithm misclassified a rectangle because it was too
+                    # close to the cluster. Either way, pick a random rectangle
+                    # to evaluate.
+                    user_annotations[user1][0] = random.choice(
+                        user_annotations[user1])
                 if len(user_annotations[user2]) != 1:
-                    user_annotations[user2][0] = random.choice(user_annotations[user2])
+                    user_annotations[user2][0] = random.choice(
+                        user_annotations[user2])
                 overlap_scores[dict_key].append(
                     overlap_error_score(
-                        user_annotations[user1][0][0], 
+                        user_annotations[user1][0][0],
                         user_annotations[user2][0][0]))
 
             # Aggregate False Positives and False Negatives over the image.
             # False Positives are fine as is.
             # Score False negatives as #FN / #Clusters.
             u1_fn_scores = false_negatives[u1_key]
-            u2_fn_scores = false_negatives[u2_key]            
-            false_negatives[u1_key] = np.mean(u1_fn_scores) if u1_fn_scores else 0.0
-            false_negatives[u2_key] = np.mean(u2_fn_scores) if u2_fn_scores else 0.0
+            u2_fn_scores = false_negatives[u2_key]
+            false_negatives[u1_key] = (np.mean(u1_fn_scores)
+                                       if u1_fn_scores else 0.0)
+            false_negatives[u2_key] = (np.mean(u2_fn_scores)
+                                       if u2_fn_scores else 0.0)
 
         # Average overlap scores per user pair per image
-        scores[imgid] = { key : np.mean(overlap_score_list) for key, overlap_score_list in overlap_scores.iteritems() if overlap_score_list }
+        scores[imgid] = { key : np.mean(overlap_score_list)
+                          for key, overlap_score_list
+                          in overlap_scores.iteritems()
+                          if overlap_score_list }
         fps[imgid] = false_positives
         fns[imgid] = false_negatives
 
     # plot the distribution of error between pairs of users on the same image
     plt.figure()
-    data_same = [error_score for img_dict in scores.itervalues() for error_score in img_dict.itervalues()]
+    data_same = [error_score for img_dict in scores.itervalues()
+                 for error_score in img_dict.itervalues()]
     n, bins, patches = plt.hist(data_same, 20, histtype='bar', normed=True)
     plt.setp(patches, 'facecolor', 'b', 'alpha', 0.75)
     plt.xlim([0,1])
     plt.title("Overlap Error scores (same images)")
+    plt.savefig(os.path.join(RESULTS_PATH, 'overlap_error_scores.png'))
     plt.show()
 
     # Draw a boxplot by image
@@ -274,41 +333,50 @@ if __name__ == '__main__':
     boxplot_data = [img_dict.values() for img_dict in scores.values()]
     num_images = len(boxplot_data)
     sample_indexes = sorted(random.sample(range(num_images), num_images / 10))
-    boxplot_data = [img_scores for i, img_scores in enumerate(boxplot_data) if i in sample_indexes]
+    boxplot_data = [img_scores for i, img_scores in enumerate(boxplot_data)
+                    if i in sample_indexes]
     img_labels = ["Image %s" % str(i) for i in sample_indexes]
     fig = plt.figure()
     ax = plt.gca()
     plt.boxplot(boxplot_data, notch=False, sym='')
     xtickNames = plt.setp(ax, xticklabels=img_labels)
     plt.setp(xtickNames, rotation=45, fontsize=8)
+    plt.savefig(os.path.join(RESULTS_PATH, 'overlap_error_scores_box.png'))
     plt.show()
 
     # plot false positives
     plt.figure()
-    data_fp = [img_dict.values() for i, img_dict in enumerate(fps.values()) if i in sample_indexes]
+    data_fp = [img_dict.values() for i, img_dict in enumerate(fps.values())
+               if i in sample_indexes]
     ax = plt.gca()
     plt.boxplot(data_fp, sym='')
     xtickNames = plt.setp(ax, xticklabels=img_labels)
     plt.setp(xtickNames, rotation=45, fontsize=8)
     plt.title("False Positive Scores")
     plt.ylim([-1, max([max(scores) for scores in data_fp]) + 2])
+    plt.savefig(os.path.join(RESULTS_PATH, 'false_positives.png'))
     plt.show()
 
     # plot false negatives
     plt.figure()
-    data_fn = [img_dict.values() for i, img_dict in enumerate(fns.values()) if i in sample_indexes]
+    data_fn = [img_dict.values() for i, img_dict in enumerate(fns.values())
+               if i in sample_indexes]
     ax = plt.gca()
     plt.boxplot(data_fn, sym='')
     xtickNames = plt.setp(ax, xticklabels=img_labels)
     plt.setp(xtickNames, rotation=45, fontsize=8)
     plt.title("False Negative Scores")
     plt.ylim([-1, 2])
+    plt.savefig(os.path.join(RESULTS_PATH, 'false_negatives.png'))
     plt.show()
 
-    exit() # Don't wait forever for the last bit!
+#    exit() # Don't wait forever for the last bit!
 
-    # plot the distribution of error scores between pairs of users on different images
-    all_annotations = [annotation for user_annotation_list in annotations.itervalues() for annotation in user_annotation_list]
+    # plot the distribution of error scores between pairs of users on different
+    # images.
+    all_annotations = [annotation for user_annotation_list
+                       in annotations.itervalues()
+                       for annotation in user_annotation_list]
     data_different = []
     for anno1, anno2 in combinations(all_annotations, 2):
         if anno1.imgid != anno2.imgid:
@@ -318,5 +386,5 @@ if __name__ == '__main__':
     plt.setp(patches, 'facecolor', 'b', 'alpha', 0.75)
     plt.xlim([0,1])
     plt.title("Overlap Error scores (different images)")
+    plt.savefig(os.path.join(RESULTS_PATH, 'overlap_scores_diff_images.png'))
     plt.show()
-        
