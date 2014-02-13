@@ -13,7 +13,7 @@ from matplotlib.patches import Rectangle
 ANNOTATION_PATH = 'user_annotations_new.csv'
 IMAGE_DIR = '/Users/dhaas/Code/projects/Art_Vision/Picasso/People/'
 MEDIAN_PATH = 'cluster_medians.csv'
-PCT_IMAGES_TO_PLOT = 0
+PCT_IMAGES_TO_PLOT = 5
 RESULTS_PATH = 'results'
 
 COLOR_MAP = {
@@ -198,6 +198,43 @@ def plot_annotations(imgid, clustered_annotations):
                          median.width, median.height, fill=False, color=color)
         ax.add_patch(rect)
     plt.show()
+
+    # Affine transform image to consistent shape and plot again.
+    from skimage.transform import AffineTransform, warp
+
+    # calculate scale and coreners
+    row_scale = float(img.shape[0]) / 400.0
+    col_scale = float(img.shape[1]) / 400.0
+    src_corners = np.array([[1, 1], [1, 400.0], [400.0, 400.0]]) - 1
+    dst_corners = np.zeros(src_corners.shape, dtype=np.double)
+    # take into account that 0th pixel is at position (0.5, 0.5)
+    dst_corners[:, 0] = col_scale * (src_corners[:, 0] + 0.5) - 0.5
+    dst_corners[:, 1] = row_scale * (src_corners[:, 1] + 0.5) - 0.5
+
+    # do the transformation
+    tform = AffineTransform()
+    tform.estimate(src_corners, dst_corners)
+    resized = warp(img, tform, output_shape=[400.0, 400.0], order=1,
+                   mode='constant', cval=0)
+
+    # plot the transformed image
+    plt.figure()
+    ax = plt.gca()
+    plt.imshow(resized)
+    for clusterid, median in medians.iteritems():
+        color = COLOR_MAP[clusterid]
+
+        # apply the transformation to each rectangle
+        corners = np.array([[median.left, median.top],
+                            [median.left + median.width,
+                             median.top + median.height]])
+        new_corners = tform.inverse(corners)
+        rect = Rectangle(new_corners[0, :],
+                         new_corners[1,0] - new_corners[0,0],
+                         new_corners[1,1] - new_corners[0,1],
+                         fill=False, color=color)
+        ax.add_patch(rect)
+    plt.show()
     return True
 
 def annotations_by_user(annotations, userids=None):
@@ -370,7 +407,7 @@ if __name__ == '__main__':
     plt.savefig(os.path.join(RESULTS_PATH, 'false_negatives.png'))
     plt.show()
 
-#    exit() # Don't wait forever for the last bit!
+    exit() # Don't wait forever for the last bit!
 
     # plot the distribution of error scores between pairs of users on different
     # images.
