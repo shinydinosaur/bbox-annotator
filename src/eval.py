@@ -112,6 +112,12 @@ if __name__ == '__main__':
         min_conf=CONFIDENCE_THRESH)
     poselets_annotations = annotation_list_to_dict(poselets_annos)
 
+    dpm_annos, dpm_confidences = parse_matlab_annotations(
+        DPM_ANNOTATION_PATH,
+        DPM_USERID,
+        min_conf=CONFIDENCE_THRESH)
+    dpm_annotations = annotation_list_to_dict(poselets_annos)
+
     # Iterate over the users, including the computers
     user_fmeasures = []
     users = unique_users(human_annotations.values())
@@ -121,6 +127,9 @@ if __name__ == '__main__':
             if userid == POSELETS_USERID:
                 confs = poselets_confidences
                 comp_annos = poselets_annotations
+            elif userid == DPM_USERID:
+                confs = dpm_confidences
+                comp_annos = dpm_annotations
             nconfs = len(confs)
             tps = [0] * nconfs
             fps = [0] * nconfs
@@ -178,8 +187,8 @@ if __name__ == '__main__':
 
     # Plot the F-measure distribution
     plot_distribution(user_fmeasures,
-                      "User F-measure distribution",
-                      filename="user_fmeasures.png")
+                      "User F-measure distribution",)
+    # filename="user_fmeasures.png")
 
     # human_annotations = parse_csv_annotations(HUMAN_ANNOTATION_PATH)
     # poselets_annotations = parse_matlab_annotations(POSELETS_ANNOTATION_PATH,
@@ -361,21 +370,21 @@ if __name__ == '__main__':
     # plt.savefig(os.path.join(RESULTS_PATH, 'false_negatives.png'))
     # plt.show()
 
-    exit() # Don't wait forever for the last bit!
+    # exit() # Don't wait forever for the last bit!
 
-    # plot the distribution of error scores between pairs of users on different
-    # images.
-    all_annotations = [annotation for user_annotation_list
-                       in annotations.itervalues()
-                       for annotation in user_annotation_list]
-    data_different = []
-    for anno1, anno2 in combinations(all_annotations, 2):
-        if anno1.imgid != anno2.imgid:
-            data_different.append(overlap_error_score(anno1, anno2))
-    plt.figure()
-    n, bins, patches = plt.hist(data_different, 20, histtype='bar', normed=True)
-    plt.setp(patches, 'facecolor', 'b', 'alpha', 0.75)
-    plt.xlim([0,1])
-    plt.title("Overlap Error scores (different images)")
-    plt.savefig(os.path.join(RESULTS_PATH, 'overlap_scores_diff_images.png'))
-    plt.show()
+    # # plot the distribution of error scores between pairs of users on different
+    # # images.
+    # all_annotations = [annotation for user_annotation_list
+    #                    in annotations.itervalues()
+    #                    for annotation in user_annotation_list]
+    # data_different = []
+    # for anno1, anno2 in combinations(all_annotations, 2):
+    #     if anno1.imgid != anno2.imgid:
+    #         data_different.append(overlap_error_score(anno1, anno2))
+    # plt.figure()
+    # n, bins, patches = plt.hist(data_different, 20, histtype='bar', normed=True)
+    # plt.setp(patches, 'facecolor', 'b', 'alpha', 0.75)
+    # plt.xlim([0,1])
+    # plt.title("Overlap Error scores (different images)")
+    # plt.savefig(os.path.join(RESULTS_PATH, 'overlap_scores_diff_images.png'))
+    # plt.show()
