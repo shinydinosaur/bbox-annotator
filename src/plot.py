@@ -3,9 +3,26 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 from matplotlib.patches import Rectangle
+from sklearn.metrics import auc
 
 from annotation import annotations_by_cluster, median_annotation
 from config import *
+
+def plot_prec_recall(tps, fps, npos, title, filename=None, show=True):
+    import pdb;pdb.set_trace()
+    recall = [float(tp) / float(npos) for tp, npos in zip(tps, npos)]
+    precision = [float(tp) / (float(tp) + float(fp))
+                 for tp, fp in zip(tps, fps)]
+    auc_score = auc(recall, precision, reorder=True)
+    plt.figure()
+    plt.plot(recall, precision, '-')
+    plt.xlim([0,1])
+    plt.ylim([0,1])
+    plt.title(title + " AUC: " + str(auc_score))
+    if filename:
+        plt.savefig(os.path.join(RESULTS_PATH, filename))
+    if show:
+        plt.show()
 
 def plot_distribution(X, title, nbins=10, filename=None, show=True):
     plt.figure()
@@ -18,7 +35,6 @@ def plot_distribution(X, title, nbins=10, filename=None, show=True):
         plt.savefig(os.path.join(RESULTS_PATH, filename))
     if show:
         plt.show()
-
 
 def plot_annotations(imgid, clustered_annotations):
     try:

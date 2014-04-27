@@ -17,7 +17,7 @@ from config import *
 from loader import (parse_csv_annotations,
                     parse_matlab_annotations,
                     annotation_list_to_dict)
-from plot import plot_annotations, plot_distribution
+from plot import plot_annotations, plot_distribution, plot_prec_recall
 
 
 def save_medians(clustered_annotations):
@@ -106,6 +106,7 @@ def eval_user(user_annos, gt_annos):
 if __name__ == '__main__':
     human_annotations = annotation_list_to_dict(
         parse_csv_annotations(HUMAN_ANNOTATION_PATH))
+
     poselets_annos, poselets_confidences = parse_matlab_annotations(
         POSELETS_ANNOTATION_PATH,
         POSELETS_USERID,
@@ -116,7 +117,7 @@ if __name__ == '__main__':
         DPM_ANNOTATION_PATH,
         DPM_USERID,
         min_conf=CONFIDENCE_THRESH)
-    dpm_annotations = annotation_list_to_dict(poselets_annos)
+    dpm_annotations = annotation_list_to_dict(dpm_annos)
 
     # Iterate over the users, including the computers
     user_fmeasures = []
@@ -175,6 +176,9 @@ if __name__ == '__main__':
                          for tp, fp, num_p in zip(tps, fps, npos)]
             max_fmeasure = max(fmeasures)
             print "Max f_measure for user", userid, ":", max_fmeasure
+            plot_prec_recall(tps, fps, npos,
+                             "Precision-Recall Curve for user " + userid,
+                             #filename=userid+"_prec_recall.png")
         else:
             user_fmeasures.append(f_measure(tps, fps, npos))
             print "F_measure for user", userid, ":", f_measure(tps, fps, npos)
