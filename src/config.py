@@ -1,9 +1,8 @@
 import os
 
 # File paths for saving and loading data
-HUMAN_ANNOTATION_PATH = '../annotations/user_annotations.csv'
-POSELETS_ANNOTATION_PATH = '../annotations/poselets_annotations.mat'
-DPM_ANNOTATION_PATH = '../annotations/dpm_annotations.mat'
+ANNOTATION_DIR = '../annotations'
+HUMAN_ANNOTATION_PATH = os.path.join(ANNOTATION_DIR, 'user_annotations.csv')
 RESULTS_PATH = '../results'
 MEDIAN_PATH = os.path.join(RESULTS_PATH, 'cluster_medians.csv')
 IMAGE_DIR = '/Users/dhaas/Code/projects/Art_Vision/Picasso/People/'
@@ -24,6 +23,22 @@ COLOR_MAP = {
 # Evaluation configuration
 CONFIDENCE_THRESH = -500.0
 OVERLAP_THRESH = 0.5
-POSELETS_USERID = 'POSELETS'
-DPM_USERID = 'DPM'
-COMP_USERIDS = [POSELETS_USERID, DPM_USERID]
+
+# Algorithm config
+ALGORITHMS = [
+    {
+        'name': 'POSELETS',
+        'annotation_path' : os.path.join(ANNOTATION_DIR,
+                                         'poselets_annotations.mat'),
+    },
+    {
+        'name': 'DPM',
+        'annotation_path' : os.path.join(ANNOTATION_DIR,
+                                         'dpm_annotations.mat'),
+    },
+ #   {
+ #       'name': 'RCNN',
+ #       'annotation_path' : os.path.join(ANNOTATION_DIR,
+ #                                        'rcnn_annotations.mat'),
+ #   },
+]

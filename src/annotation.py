@@ -1,5 +1,6 @@
 import numpy as np
 import os
+from operator import attrgetter
 from scipy.spatial.distance import pdist
 
 class Annotation(object):
@@ -142,3 +143,6 @@ def annotations_by_humanity(annotations, clustered=False):
         for annotation, cluster_id in annotations:
             by_huamnity[annotation.is_human].append((annotation, cluster_id))
     return by_humanity
+
+def annotations_by_confidence(annotations):
+    return sorted(annotations, key=attrgetter('confidence'), reverse=True)

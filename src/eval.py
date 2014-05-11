@@ -10,15 +10,17 @@ from annotation import (Annotation,
                         annotations_by_user,
                         annotations_by_cluster,
                         annotations_by_humanity,
+                        annotations_by_confidence,
                         unique_users,
                         split_annotations)
 from cluster import cluster_annotations, assign_clusters
 from config import *
 from loader import (parse_csv_annotations,
-                    parse_matlab_annotations,
-                    annotation_list_to_dict)
+                    annotation_list_to_dict,
+                    load_algorithm)
 from plot import plot_annotations, plot_distribution, plot_prec_recall
 
+EVAL_CACHE = {}
 
 def save_medians(clustered_annotations):
     by_cluster = annotations_by_cluster(clustered_annotations)
@@ -50,31 +52,60 @@ def f_measure(num_tps, num_fps, num_pos):
 def eval_comp(comp_annos, gt_annos, confidences):
     tps = []
     fps = []
-    npos = []
-    last_annos = []
-    for confidence in confidences:
-        cur_annos = [anno for anno in comp_annos
-                     if anno.confidence >= confidence]
-        if not cur_annos:
-            tps.append(0)
-            fps.append(0)
-        elif cur_annos == last_annos:
-            tps.append(tps[-1])
-            fps.append(fps[-1])
-        else:
-            conf_tps, conf_fps, conf_npos = eval_user(cur_annos, gt_annos)
-            tps.append(conf_tps)
-            fps.append(conf_fps)
-            if not npos:
-                npos = [conf_npos]*len(confidences)
-        last_annos = cur_annos
-    if not npos: # computer had no detections at any confidence
-        num_pos = len(annotations_by_cluster(cluster_annotations(gt_annos)))
-        npos = [num_pos]*len(confidences)
-    return tps, fps, npos
+    sorted_annos = annotations_by_confidence(comp_annos)
+    tps_raw, fps_raw, npos = eval_user(sorted_annos, gt_annos)
+    if len(comp_annos) == 0:
+        return ([0] * len(confidences),
+                [0] * len(confidences),
+                [npos] * len(confidences))
+
+    cur_idx = 0
+    tps_sofar = 0
+    fps_sofar = 0
+    for conf in confidences:
+        new_tps = 0
+        new_fps = 0
+        if cur_idx < len(sorted_annos):
+            while conf <= sorted_annos[cur_idx].confidence:
+                new_tps += tps_raw[cur_idx]
+                new_fps += fps_raw[cur_idx]
+                cur_idx += 1
+                if cur_idx >= len(sorted_annos):
+                    break
+        tps_sofar += new_tps
+        fps_sofar += new_fps
+        tps.append(tps_sofar)
+        fps.append(fps_sofar)
+    return (tps, fps, [npos] * len(confidences))
+
+#    tps = []
+#    fps = []
+#    npos = []
+#    last_annos = []
+#    for confidence in confidences:
+#        cur_annos = [anno for anno in comp_annos
+#                     if anno.confidence >= confidence]
+#        if not cur_annos:
+#            tps.append(0)
+#            fps.append(0)
+#        elif cur_annos == last_annos:
+#            tps.append(tps[-1])
+#            fps.append(fps[-1])
+#        else:
+#            conf_tps, conf_fps, conf_npos = eval_user(cur_annos, gt_annos)
+#            tps.append(conf_tps)
+#            fps.append(conf_fps)
+#            if not npos:
+#                npos = [conf_npos]*len(confidences)
+#        last_annos = cur_annos
+#    if not npos: # computer had no detections at any confidence
+#        num_pos = len(annotations_by_cluster(cluster_annotations(gt_annos)))
+#        npos = [num_pos]*len(confidences)
+#    return tps, fps, npos
 
 def eval_user(user_annos, gt_annos):
-    tps = fps = npos = 0
+    tps = []
+    fps = []
 
     clusters = annotations_by_cluster(cluster_annotations(gt_annos))
     gt_boxes = [median_annotation(annotations)
@@ -94,43 +125,34 @@ def eval_user(user_annos, gt_annos):
 
         if best_overlap_score < OVERLAP_THRESH: # Hit!
             if hits[best_box_index]:
-                fps += 1 # duplicate!
+                fps.append(1) # duplicate!
+                tps.append(0)
             else:
-                tps += 1
+                tps.append(1)
+                fps.append(0)
                 hits[best_box_index] = True
         else:
-            fps += 1
+            fps.append(1)
+            tps.append(0)
 
     return (tps, fps, npos)
 
 if __name__ == '__main__':
     human_annotations = annotation_list_to_dict(
         parse_csv_annotations(HUMAN_ANNOTATION_PATH))
+    users = unique_users(human_annotations.values())
 
-    poselets_annos, poselets_confidences = parse_matlab_annotations(
-        POSELETS_ANNOTATION_PATH,
-        POSELETS_USERID,
-        min_conf=CONFIDENCE_THRESH)
-    poselets_annotations = annotation_list_to_dict(poselets_annos)
-
-    dpm_annos, dpm_confidences = parse_matlab_annotations(
-        DPM_ANNOTATION_PATH,
-        DPM_USERID,
-        min_conf=CONFIDENCE_THRESH)
-    dpm_annotations = annotation_list_to_dict(dpm_annos)
+    algorithms = {}
+    for algorithm in ALGORITHMS:
+        load_algorithm(algorithm, CONFIDENCE_THRESH, algorithms)
+        users.add(algorithm['name'])
 
     # Iterate over the users, including the computers
     user_fmeasures = []
-    users = unique_users(human_annotations.values())
-    users.update(COMP_USERIDS)
     for userid in users:
-        if userid in COMP_USERIDS:
-            if userid == POSELETS_USERID:
-                confs = poselets_confidences
-                comp_annos = poselets_annotations
-            elif userid == DPM_USERID:
-                confs = dpm_confidences
-                comp_annos = dpm_annotations
+        if userid in algorithms:
+            comp_annos = algorithms[userid][0]
+            confs = algorithms[userid][1]
             nconfs = len(confs)
             tps = [0] * nconfs
             fps = [0] * nconfs
@@ -145,7 +167,7 @@ if __name__ == '__main__':
 
             # Computers: evaluate the computer annotations against all
             # user annotations.
-            if userid in COMP_USERIDS:
+            if userid in algorithms:
                 imgidx += 1
                 if imgidx % 20 == 0:
                     print ("Completed %d/%d images for user %s"
@@ -165,12 +187,12 @@ if __name__ == '__main__':
                                                          userid=userid)
                 image_tps, image_fps, image_npos = eval_user(
                     user_annos, gt_annos)
-                tps += image_tps
-                fps += image_fps
+                tps += sum(image_tps)
+                fps += sum(image_fps)
                 npos += image_npos
 
         # Compute a user-specific F-measure
-        if userid in COMP_USERIDS:
+        if userid in algorithms:
             # TODO: plot precision-recall curve?
             fmeasures = [f_measure(tp, fp, num_p)
                          for tp, fp, num_p in zip(tps, fps, npos)]
@@ -178,7 +200,7 @@ if __name__ == '__main__':
             print "Max f_measure for user", userid, ":", max_fmeasure
             plot_prec_recall(tps, fps, npos,
                              "Precision-Recall Curve for user " + userid,
-                             #filename=userid+"_prec_recall.png")
+                             filename=userid+"_prec_recall.png")
         else:
             user_fmeasures.append(f_measure(tps, fps, npos))
             print "F_measure for user", userid, ":", f_measure(tps, fps, npos)

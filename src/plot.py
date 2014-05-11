@@ -9,7 +9,6 @@ from annotation import annotations_by_cluster, median_annotation
 from config import *
 
 def plot_prec_recall(tps, fps, npos, title, filename=None, show=True):
-    import pdb;pdb.set_trace()
     recall = [float(tp) / float(npos) for tp, npos in zip(tps, npos)]
     precision = [float(tp) / (float(tp) + float(fp))
                  for tp, fp in zip(tps, fps)]
