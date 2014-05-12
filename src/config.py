@@ -6,6 +6,14 @@ HUMAN_ANNOTATION_PATH = os.path.join(ANNOTATION_DIR, 'user_annotations.csv')
 RESULTS_PATH = '../results'
 MEDIAN_PATH = os.path.join(RESULTS_PATH, 'cluster_medians.csv')
 IMAGE_DIR = '/Users/dhaas/Code/projects/Art_Vision/Picasso/People/'
+BUCKET_INPUT_PATH = '../buckets.csv'
+DIFFICULTY_BUCKET_OUTPUT_PATH = os.path.join(RESULTS_PATH,
+                                             'buckets_difficulty.csv')
+EQUIWIDTH_TIME_BUCKET_OUTPUT_PATH = os.path.join(RESULTS_PATH,
+                                                 'buckets_time_equiwidth.csv')
+EQUIDEPTH_TIME_BUCKET_OUTPUT_PATH = os.path.join(RESULTS_PATH,
+                                                 'buckets_time_equidepth.csv')
+
 
 # Plotting configuration
 PCT_IMAGES_TO_PLOT = 5

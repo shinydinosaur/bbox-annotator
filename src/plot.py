@@ -23,12 +23,14 @@ def plot_prec_recall(tps, fps, npos, title, filename=None, show=True):
     if show:
         plt.show()
 
-def plot_distribution(X, title, nbins=10, filename=None, show=True):
+def plot_distribution(X, title, nbins=10, set_lims=True, normed=True,
+                      filename=None, show=True):
     plt.figure()
-    n, bins, patches = plt.hist(X, nbins, histtype='bar', normed=True)
+    n, bins, patches = plt.hist(X, nbins, histtype='bar', normed=normed)
     plt.setp(patches, 'facecolor', 'b', 'alpha', 0.75)
     # patches[0].set_facecolor('r')
-    plt.xlim([0,1])
+    if set_lims:
+        plt.xlim([0,1])
     plt.title(title)
     if filename:
         plt.savefig(os.path.join(RESULTS_PATH, filename))
