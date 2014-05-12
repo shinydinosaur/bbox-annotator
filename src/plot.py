@@ -11,6 +11,7 @@ from config import *
 def plot_prec_recall(tps, fps, npos, title, filename=None, show=True):
     recall = [float(tp) / float(npos) for tp, npos in zip(tps, npos)]
     precision = [float(tp) / (float(tp) + float(fp))
+                 if float(tp) + float(fp) != 0 else 1.0
                  for tp, fp in zip(tps, fps)]
     auc_score = auc(recall, precision, reorder=True)
     plt.figure()

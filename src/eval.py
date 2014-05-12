@@ -13,6 +13,7 @@ from annotation import (Annotation,
                         annotations_by_confidence,
                         unique_users,
                         split_annotations)
+from buckets import assign_buckets
 from cluster import cluster_annotations, assign_clusters
 from config import *
 from loader import (parse_csv_annotations,
@@ -137,14 +138,9 @@ def eval_user(user_annos, gt_annos):
 
     return (tps, fps, npos)
 
-if __name__ == '__main__':
-    human_annotations = annotation_list_to_dict(
-        parse_csv_annotations(HUMAN_ANNOTATION_PATH))
+def eval_algorithms(bucket, human_annotations, algorithms):
     users = unique_users(human_annotations.values())
-
-    algorithms = {}
     for algorithm in ALGORITHMS:
-        load_algorithm(algorithm, CONFIDENCE_THRESH, algorithms)
         users.add(algorithm['name'])
 
     # Iterate over the users, including the computers
@@ -162,8 +158,10 @@ if __name__ == '__main__':
 
         # Iterate over the images
         imgidx = -1
-        num_imgs = len(human_annotations.keys())
+        num_imgs = len(bucket.imgids)
         for imgid, annotation_list in human_annotations.iteritems():
+            if imgid not in bucket.imgids:
+                continue
 
             # Computers: evaluate the computer annotations against all
             # user annotations.
@@ -185,6 +183,9 @@ if __name__ == '__main__':
             else:
                 user_annos, gt_annos = split_annotations(annotation_list,
                                                          userid=userid)
+
+                if not user_annos: # user didn't annotate this image
+                    continue
                 image_tps, image_fps, image_npos = eval_user(
                     user_annos, gt_annos)
                 tps += sum(image_tps)
@@ -193,24 +194,54 @@ if __name__ == '__main__':
 
         # Compute a user-specific F-measure
         if userid in algorithms:
-            # TODO: plot precision-recall curve?
             fmeasures = [f_measure(tp, fp, num_p)
                          for tp, fp, num_p in zip(tps, fps, npos)]
             max_fmeasure = max(fmeasures)
             print "Max f_measure for user", userid, ":", max_fmeasure
             plot_prec_recall(tps, fps, npos,
-                             "Precision-Recall Curve for user " + userid,
-                             filename=userid+"_prec_recall.png")
+                             ("Precision-Recall Curve for user " + userid
+                              + " (Method " + bucket.method + " Bucket "
+                              + str(bucket.name) + ")"),
+                             filename="%s_prec_recall_%s_%d.png" % (
+                                 userid, bucket.method, bucket.name))
         else:
-            user_fmeasures.append(f_measure(tps, fps, npos))
-            print "F_measure for user", userid, ":", f_measure(tps, fps, npos)
+            # user may not have annotated anything in this bucket
+            if npos == 0:
+                print "F_measure for user", userid, ": Not Enough Data"
+            else:
+                fm = f_measure(tps, fps, npos)
+                user_fmeasures.append(fm)
+                print "F_measure for user", userid, ":", fm
 
     # Compute an average F-measure
     mean_fmeasure = np.mean(user_fmeasures)
     median_fmeasure = np.median(user_fmeasures)
-    print "Mean human f_measure:", mean_fmeasure
-    print "Median human f_measure:", median_fmeasure
+    print "Mean human f_measure (Method %s, bucket %d):" % (
+        bucket.method, bucket.name), mean_fmeasure
+    print "Median human f_measure (Method %s, bucket %d):" % (
+        bucket.method, bucket.name), median_fmeasure
 
     # Plot the F-measure distribution
     plot_distribution(user_fmeasures,
-                      "User F-measure distribution",)
+                      "User F-measure distribution (Method %s, bucket %d)" % (
+                          bucket.method, bucket.name),
+                      filename="user_fmeasure_dist_%s_%d" % (
+                          bucket.method.lower(), bucket.name))
+
+if __name__ == '__main__':
+    human_annotations = annotation_list_to_dict(
+        parse_csv_annotations(HUMAN_ANNOTATION_PATH))
+
+    algorithms = {}
+    for algorithm in ALGORITHMS:
+        load_algorithm(algorithm, CONFIDENCE_THRESH, algorithms)
+
+    (difficulty_buckets,
+     time_equiwidth_buckets,
+     time_equidepth_buckets,
+     all_bucket) = assign_buckets()
+
+    for bucket in (all_bucket + difficulty_buckets
+                   + time_equiwidth_buckets + time_equidepth_buckets):
+        print "Evaluating bucket %d (method %s)" % (bucket.name, bucket.method)
+        eval_algorithms(bucket, human_annotations, algorithms)

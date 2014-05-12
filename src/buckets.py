@@ -1,5 +1,6 @@
 import csv
 import numpy as np
+import os
 
 from config import (BUCKET_INPUT_PATH,
                     DIFFICULTY_BUCKET_OUTPUT_PATH,
@@ -9,7 +10,8 @@ from plot import plot_distribution
 
 class Bucket(object):
     def __init__(self, images, bucket_method, bucket_id):
-        self.imgids = images
+        self.imgids = [os.path.splitext(os.path.basename(image))[0]
+                       for image in images]
         self.method = bucket_method
         self.name = bucket_id
 
@@ -39,9 +41,10 @@ class Bucket(object):
                 for value in bucket.histogram_values()]
 
     class Methods:
-        DIFFICULTY = 0
-        TIME_EQUIWIDTH = 1
-        TIME_EQUIDEPTH = 2
+        DIFFICULTY = "By Difficulty"
+        TIME_EQUIWIDTH = "By Time (Equiwidth)"
+        TIME_EQUIDEPTH = "By Time (Equidepth)"
+        ALL = "No bucketing"
 
 def load_bucket_rows():
     rows = []
@@ -73,7 +76,6 @@ def assign_bucket_by_time(img_median_time, all_median_times, equiwidth=True):
     """
     max_time = max(all_median_times)
     min_time = min(all_median_times)
-    print min_time, max_time
     if equiwidth:
         bucket_size = (max_time - min_time) / 5.0
         bucket_ends = [min_time + bucket_size,
@@ -84,7 +86,6 @@ def assign_bucket_by_time(img_median_time, all_median_times, equiwidth=True):
     else:
         bucket_ends = np.percentile(all_median_times, (20, 40, 60, 80, 100))
     for bucket_index, bucket_end in enumerate(bucket_ends):
-        print bucket_index, bucket_end
         if img_median_time <= bucket_end:
             return bucket_index + 1 # get an id in [1, 5]
     raise ValueError("img_median_time exceeds maximum median time")
@@ -101,6 +102,7 @@ def assign_buckets(serialize=False, plot=False):
     buckets_by_difficulty = {1:[], 2:[], 3:[], 4:[], 5:[]}
     buckets_by_time_equiwidth = {1:[], 2:[], 3:[], 4:[], 5:[]}
     buckets_by_time_equidepth = {1:[], 2:[], 3:[], 4:[], 5:[]}
+    bucket_all = {1:[]}
     for imgid, rows in data.iteritems():
         buckets_by_difficulty[
             assign_bucket_by_difficulty(
@@ -116,9 +118,12 @@ def assign_buckets(serialize=False, plot=False):
                 img_median_time, all_median_times,
                 equiwidth=False)].append(imgid)
 
+        bucket_all[1].append(imgid)
+
     difficulty_buckets = []
     equiwidth_time_buckets = []
     equidepth_time_buckets = []
+    all_bucket = []
     for bucket_id in range(1, 6):
         difficulty_buckets.append(
             Bucket(buckets_by_difficulty[bucket_id],
@@ -134,6 +139,13 @@ def assign_buckets(serialize=False, plot=False):
             Bucket(buckets_by_time_equidepth[bucket_id],
                    Bucket.Methods.TIME_EQUIDEPTH,
                    bucket_id))
+
+        if bucket_id == 1:
+            all_bucket.append(
+                Bucket(bucket_all[bucket_id],
+                       Bucket.Methods.ALL,
+                       bucket_id))
+
     if serialize:
         Bucket.serialize_buckets(difficulty_buckets,
                                  DIFFICULTY_BUCKET_OUTPUT_PATH)
@@ -167,7 +179,8 @@ def assign_buckets(serialize=False, plot=False):
 
     return (difficulty_buckets,
             equiwidth_time_buckets,
-            equidepth_time_buckets)
+            equidepth_time_buckets,
+            all_bucket)
 
 if __name__ == '__main__':
     assign_buckets(serialize=True, plot=True)
