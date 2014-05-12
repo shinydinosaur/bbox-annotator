@@ -44,9 +44,9 @@ ALGORITHMS = [
         'annotation_path' : os.path.join(ANNOTATION_DIR,
                                          'dpm_annotations.mat'),
     },
- #   {
- #       'name': 'RCNN',
- #       'annotation_path' : os.path.join(ANNOTATION_DIR,
- #                                        'rcnn_annotations.mat'),
- #   },
+    {
+        'name': 'RCNN',
+        'annotation_path' : os.path.join(ANNOTATION_DIR,
+                                         'rcnn_annotations.mat'),
+    },
 ]

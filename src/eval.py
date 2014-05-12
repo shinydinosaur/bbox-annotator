@@ -203,7 +203,8 @@ def eval_algorithms(bucket, human_annotations, algorithms):
                               + " (Method " + bucket.method + " Bucket "
                               + str(bucket.name) + ")"),
                              filename="%s_prec_recall_%s_%d.png" % (
-                                 userid, bucket.method, bucket.name))
+                                 userid, bucket.method, bucket.name),
+                             show=False)
         else:
             # user may not have annotated anything in this bucket
             if npos == 0:
@@ -226,7 +227,8 @@ def eval_algorithms(bucket, human_annotations, algorithms):
                       "User F-measure distribution (Method %s, bucket %d)" % (
                           bucket.method, bucket.name),
                       filename="user_fmeasure_dist_%s_%d" % (
-                          bucket.method.lower(), bucket.name))
+                          bucket.method.lower(), bucket.name),
+                      show=False)
 
 if __name__ == '__main__':
     human_annotations = annotation_list_to_dict(
