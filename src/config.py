@@ -49,4 +49,15 @@ ALGORITHMS = [
         'annotation_path' : os.path.join(ANNOTATION_DIR,
                                          'rcnn_annotations.mat'),
     },
+    {
+        'name': 'RCNN_NEW',
+        'annotation_path' : os.path.join(ANNOTATION_DIR,
+                                         'rcnn_new_annotations.mat'),
+    },
+
+    {
+        'name': 'RCNN_REGIONS',
+        'annotation_path' : os.path.join(ANNOTATION_DIR,
+                                         'rcnn_region_annotations.mat'),
+    },
 ]

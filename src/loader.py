@@ -37,11 +37,18 @@ def parse_matlab_annotations(annotation_file, userid, is_human=False,
     else:
         raise ValueError(".mat file contains no list of image ids.")
 
+    if mat.has_key('ds'):
+        bbox_key = 'ds'
+    elif mat.has_key('region_proposals'):
+        bbox_key = 'region_proposals'
+    else:
+        raise ValueError(".mat file contains no list of detections.")
+
     num_images = len(mat[img_id_key])
     annotations = []
     for i in range(num_images):
         img_id = mat[img_id_key][i][0][0] # weird parsing of matlab cells
-        for det in mat['ds'][0][i]:
+        for det in mat[bbox_key][0][i]:
             if not det.any():
                 continue
 #            left, top, width, height, score = det

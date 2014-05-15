@@ -200,8 +200,8 @@ def eval_algorithms(bucket, human_annotations, algorithms):
             print "Max f_measure for user", userid, ":", max_fmeasure
             plot_prec_recall(tps, fps, npos,
                              ("Precision-Recall Curve for user " + userid
-                              + " (Method " + bucket.method + " Bucket "
-                              + str(bucket.name) + ")"),
+                              + "\n(Method " + bucket.method + " Bucket "
+                              + str(bucket.name) + ")\n"),
                              filename="%s_prec_recall_%s_%d.png" % (
                                  userid, bucket.method, bucket.name),
                              show=False)

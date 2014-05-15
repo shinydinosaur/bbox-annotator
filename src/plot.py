@@ -15,6 +15,7 @@ def plot_prec_recall(tps, fps, npos, title, filename=None, show=True):
                  for tp, fp in zip(tps, fps)]
     auc_score = auc(recall, precision, reorder=True)
     plt.figure()
+    plt.subplots_adjust(top=0.85)
     plt.plot(recall, precision, '-')
     plt.xlim([0,1])
     plt.ylim([0,1])
@@ -23,6 +24,8 @@ def plot_prec_recall(tps, fps, npos, title, filename=None, show=True):
         plt.savefig(os.path.join(RESULTS_PATH, filename))
     if show:
         plt.show()
+    else:
+        plt.close()
 
 def plot_distribution(X, title, nbins=10, set_lims=True, normed=True,
                       filename=None, show=True):
@@ -37,6 +40,8 @@ def plot_distribution(X, title, nbins=10, set_lims=True, normed=True,
         plt.savefig(os.path.join(RESULTS_PATH, filename))
     if show:
         plt.show()
+    else:
+        plt.close()
 
 def plot_annotations(imgid, clustered_annotations):
     try:
