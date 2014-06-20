@@ -145,6 +145,7 @@ def eval_algorithms(bucket, human_annotations, algorithms):
 
     # Iterate over the users, including the computers
     user_fmeasures = []
+    user_prs = []
     for userid in users:
         if userid in algorithms:
             comp_annos = algorithms[userid][0]
@@ -212,15 +213,31 @@ def eval_algorithms(bucket, human_annotations, algorithms):
             else:
                 fm = f_measure(tps, fps, npos)
                 user_fmeasures.append(fm)
+                recall = float(tps) / float(npos)
+                prec = float(tps) / (float(tps) + float(fps))
+                user_prs.append((prec, recall))
                 print "F_measure for user", userid, ":", fm
 
     # Compute an average F-measure
     mean_fmeasure = np.mean(user_fmeasures)
     median_fmeasure = np.median(user_fmeasures)
+    precs, recalls = zip(*user_prs)
+    mean_prec = np.mean(precs)
+    median_prec = np.median(precs)
+    mean_recall = np.mean(recalls)
+    median_recall = np.median(recalls)
     print "Mean human f_measure (Method %s, bucket %d):" % (
         bucket.method, bucket.name), mean_fmeasure
     print "Median human f_measure (Method %s, bucket %d):" % (
         bucket.method, bucket.name), median_fmeasure
+    print "Mean human precision (Method %s, bucket %d):" % (
+        bucket.method, bucket.name), mean_prec
+    print "Mean human recall (Method %s, bucket %d):" % (
+        bucket.method, bucket.name), mean_recall
+    print "Median human precision (Method %s, bucket %d):" % (
+        bucket.method, bucket.name), median_prec
+    print "Median human recall (Method %s, bucket %d):" % (
+        bucket.method, bucket.name), median_recall
 
     # Plot the F-measure distribution
     plot_distribution(user_fmeasures,

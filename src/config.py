@@ -5,6 +5,7 @@ ANNOTATION_DIR = '../annotations'
 HUMAN_ANNOTATION_PATH = os.path.join(ANNOTATION_DIR, 'user_annotations.csv')
 RESULTS_PATH = '../results'
 DATA_PATH = os.path.join(RESULTS_PATH, 'data')
+PAPER_FIGS_PATH = os.path.join(RESULTS_PATH, 'paper_figs')
 MEDIAN_PATH = os.path.join(RESULTS_PATH, 'cluster_medians.csv')
 IMAGE_DIR = '/Users/dhaas/Code/projects/Art_Vision/Picasso/People/'
 BUCKET_INPUT_PATH = '../buckets.csv'
