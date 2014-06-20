@@ -1,8 +1,10 @@
+import csv
 import os
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 from matplotlib.patches import Rectangle
+from scipy.interpolate import spline
 from sklearn.metrics import auc
 
 from annotation import annotations_by_cluster, median_annotation
@@ -22,6 +24,9 @@ def plot_prec_recall(tps, fps, npos, title, filename=None, show=True):
     plt.title(title + " AUC: " + str(auc_score))
     if filename:
         plt.savefig(os.path.join(RESULTS_PATH, filename))
+        with open(os.path.join(RESULTS_PATH, 'data', filename)
+                  .replace('png', 'txt'), 'w') as dataf:
+            csv.writer(dataf).writerows(zip(recall, precision))
     if show:
         plt.show()
     else:
@@ -30,14 +35,27 @@ def plot_prec_recall(tps, fps, npos, title, filename=None, show=True):
 def plot_distribution(X, title, nbins=10, set_lims=True, normed=True,
                       filename=None, show=True):
     plt.figure()
-    n, bins, patches = plt.hist(X, nbins, histtype='bar', normed=normed)
-    plt.setp(patches, 'facecolor', 'b', 'alpha', 0.75)
+    #    n, bins, patches = plt.hist(X, nbins, histtype='bar', normed=normed)
+    #    plt.setp(patches, 'facecolor', 'b', 'alpha', 0.75)
+    rng_min = -1.0 / (2*(nbins - 1.0))
+    rng_max = 1.0 + 1.0/(2*(nbins - 1.0))
+    y, bin_edges = np.histogram(X, bins=nbins, range=(rng_min, rng_max))
+    bincenters = 0.5*(bin_edges[1:] + bin_edges[:-1])
+    X = np.linspace(bincenters.min(), bincenters.max(), 300)
+    Y = spline(bincenters, y, X)
+    if Y.min() < 0:
+        Y = Y + np.abs(Y.min())
+    plt.plot(X, Y)
     # patches[0].set_facecolor('r')
     if set_lims:
         plt.xlim([0,1])
+        plt.ylim([0, 15])
     plt.title(title)
     if filename:
         plt.savefig(os.path.join(RESULTS_PATH, filename))
+        with open(os.path.join(RESULTS_PATH, 'data', filename)
+                  .replace('png', 'txt'), 'w') as dataf:
+            csv.writer(dataf).writerows(zip(X, Y))
     if show:
         plt.show()
     else:

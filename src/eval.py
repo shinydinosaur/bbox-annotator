@@ -226,7 +226,9 @@ def eval_algorithms(bucket, human_annotations, algorithms):
     plot_distribution(user_fmeasures,
                       "User F-measure distribution (Method %s, bucket %d)" % (
                           bucket.method, bucket.name),
-                      filename="user_fmeasure_dist_%s_%d" % (
+                      nbins=10,
+                      normed=True,
+                      filename="user_fmeasure_dist_%s_%d.png" % (
                           bucket.method.lower(), bucket.name),
                       show=False)
 
