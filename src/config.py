@@ -50,14 +50,8 @@ ALGORITHMS = [
                                          'rcnn_annotations.mat'),
     },
     {
-        'name': 'RCNN_NEW',
+        'name': 'D&T',
         'annotation_path' : os.path.join(ANNOTATION_DIR,
-                                         'rcnn_new_annotations.mat'),
-    },
-
-    {
-        'name': 'RCNN_REGIONS',
-        'annotation_path' : os.path.join(ANNOTATION_DIR,
-                                         'rcnn_region_annotations.mat'),
+                                         'd_t_annotations.mat'),
     },
 ]
