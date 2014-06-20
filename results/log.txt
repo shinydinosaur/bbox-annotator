@@ -1,5 +1,5 @@
 Evaluating bucket 1 (method No bucketing)
-F_measure for user 3 : 0.851063829787
+F_measure for user 3 : 0.859574468085
 F_measure for user 6 : 0.883720930233
 Completed 0/218 images for user D&T
 Completed 20/218 images for user D&T
@@ -12,19 +12,19 @@ Completed 140/218 images for user D&T
 Completed 160/218 images for user D&T
 Completed 180/218 images for user D&T
 Completed 200/218 images for user D&T
-Max f_measure for user D&T : 0.0520694259012
-F_measure for user 9 : 0.844660194175
-F_measure for user 10 : 0.698337292162
-F_measure for user 13 : 0.894495412844
-F_measure for user 14 : 0.828326180258
-F_measure for user 15 : 0.870415647922
-F_measure for user 16 : 0.84649122807
-F_measure for user 17 : 0.846846846847
-F_measure for user 18 : 0.846652267819
+Max f_measure for user D&T: 0.0514018691589. From precision = 0.0271365638767, recall = 0.485804416404.
+F_measure for user 9 : 0.854368932039
+F_measure for user 10 : 0.684085510689
+F_measure for user 13 : 0.880733944954
+F_measure for user 14 : 0.832618025751
+F_measure for user 15 : 0.865525672372
+F_measure for user 16 : 0.859649122807
+F_measure for user 17 : 0.833333333333
+F_measure for user 18 : 0.842332613391
 F_measure for user 19 : 0.832214765101
 F_measure for user 21 : 0.756097560976
-F_measure for user 22 : 0.880898876404
-F_measure for user 23 : 0.900473933649
+F_measure for user 22 : 0.885393258427
+F_measure for user 23 : 0.895734597156
 F_measure for user 24 : 0.515
 Completed 0/218 images for user RCNN
 Completed 20/218 images for user RCNN
@@ -37,9 +37,9 @@ Completed 140/218 images for user RCNN
 Completed 160/218 images for user RCNN
 Completed 180/218 images for user RCNN
 Completed 200/218 images for user RCNN
-Max f_measure for user RCNN : 0.230303030303
-F_measure for user 26 : 0.930555555556
-F_measure for user 28 : 0.912359550562
+Max f_measure for user RCNN: 0.226262626263. From precision = 0.314606741573, recall = 0.17665615142.
+F_measure for user 26 : 0.902777777778
+F_measure for user 28 : 0.907865168539
 Completed 0/218 images for user DPM
 Completed 20/218 images for user DPM
 Completed 40/218 images for user DPM
@@ -51,7 +51,7 @@ Completed 140/218 images for user DPM
 Completed 160/218 images for user DPM
 Completed 180/218 images for user DPM
 Completed 200/218 images for user DPM
-Max f_measure for user DPM : 0.450617283951
+Max f_measure for user DPM: 0.453703703704. From precision = 0.444108761329, recall = 0.463722397476.
 Completed 0/218 images for user POSELETS
 Completed 20/218 images for user POSELETS
 Completed 40/218 images for user POSELETS
@@ -63,18 +63,18 @@ Completed 140/218 images for user POSELETS
 Completed 160/218 images for user POSELETS
 Completed 180/218 images for user POSELETS
 Completed 200/218 images for user POSELETS
-Max f_measure for user POSELETS : 0.267379679144
-Mean human f_measure (Method No bucketing, bucket 1): 0.831682945433
-Median human f_measure (Method No bucketing, bucket 1): 0.846846846847
-Mean human precision (Method No bucketing, bucket 1): 0.807190829731
-Mean human recall (Method No bucketing, bucket 1): 0.86249085525
-Median human precision (Method No bucketing, bucket 1): 0.810344827586
-Median human recall (Method No bucketing, bucket 1): 0.88785046729
+Max f_measure for user POSELETS: 0.270944741533. From precision = 0.311475409836, recall = 0.239747634069.
+Mean human f_measure (Method No bucketing, bucket 1): 0.828883863625
+Median human f_measure (Method No bucketing, bucket 1): 0.859574468085
+Mean human precision (Method No bucketing, bucket 1): 0.804397417456
+Mean human recall (Method No bucketing, bucket 1): 0.859692754324
+Median human precision (Method No bucketing, bucket 1): 0.80658436214
+Median human recall (Method No bucketing, bucket 1): 0.885714285714
 Evaluating bucket 1 (method By Difficulty)
 F_measure for user 3 : 1.0
 F_measure for user 6 : Not Enough Data
 Completed 0/6 images for user D&T
-Max f_measure for user D&T : 0.285714285714
+Max f_measure for user D&T: 0.285714285714. From precision = 0.5, recall = 0.2.
 F_measure for user 9 : 1.0
 F_measure for user 10 : 0.823529411765
 F_measure for user 13 : 0.941176470588
@@ -89,13 +89,13 @@ F_measure for user 22 : 1.0
 F_measure for user 23 : 1.0
 F_measure for user 24 : 1.0
 Completed 0/6 images for user RCNN
-Max f_measure for user RCNN : 0.6
+Max f_measure for user RCNN: 0.6. From precision = 0.6, recall = 0.6.
 F_measure for user 26 : 1.0
 F_measure for user 28 : 1.0
 Completed 0/6 images for user DPM
-Max f_measure for user DPM : 0.666666666667
+Max f_measure for user DPM: 0.666666666667. From precision = 0.75, recall = 0.6.
 Completed 0/6 images for user POSELETS
-Max f_measure for user POSELETS : 0.555555555556
+Max f_measure for user POSELETS: 0.555555555556. From precision = 0.625, recall = 0.5.
 Mean human f_measure (Method By Difficulty, bucket 1): 0.969222689076
 Median human f_measure (Method By Difficulty, bucket 1): 1.0
 Mean human precision (Method By Difficulty, bucket 1): 0.950047348485
@@ -106,7 +106,7 @@ Evaluating bucket 2 (method By Difficulty)
 F_measure for user 3 : 1.0
 F_measure for user 6 : 1.0
 Completed 0/18 images for user D&T
-Max f_measure for user D&T : 0.0689655172414
+Max f_measure for user D&T: 0.0689655172414. From precision = 0.0384615384615, recall = 0.333333333333.
 F_measure for user 9 : 0.928571428571
 F_measure for user 10 : 0.785714285714
 F_measure for user 13 : 1.0
@@ -121,13 +121,13 @@ F_measure for user 22 : 1.0
 F_measure for user 23 : 1.0
 F_measure for user 24 : 0.48275862069
 Completed 0/18 images for user RCNN
-Max f_measure for user RCNN : 0.387096774194
+Max f_measure for user RCNN: 0.387096774194. From precision = 0.6, recall = 0.285714285714.
 F_measure for user 26 : 1.0
 F_measure for user 28 : 0.923076923077
 Completed 0/18 images for user DPM
-Max f_measure for user DPM : 0.736842105263
+Max f_measure for user DPM: 0.736842105263. From precision = 0.823529411765, recall = 0.666666666667.
 Completed 0/18 images for user POSELETS
-Max f_measure for user POSELETS : 0.634146341463
+Max f_measure for user POSELETS: 0.634146341463. From precision = 0.65, recall = 0.619047619048.
 Mean human f_measure (Method By Difficulty, bucket 2): 0.933414354953
 Median human f_measure (Method By Difficulty, bucket 2): 1.0
 Mean human precision (Method By Difficulty, bucket 2): 0.925371581513
@@ -135,84 +135,84 @@ Mean human recall (Method By Difficulty, bucket 2): 0.943374272786
 Median human precision (Method By Difficulty, bucket 2): 1.0
 Median human recall (Method By Difficulty, bucket 2): 1.0
 Evaluating bucket 3 (method By Difficulty)
-F_measure for user 3 : 0.911764705882
-F_measure for user 6 : 0.915254237288
+F_measure for user 3 : 0.882352941176
+F_measure for user 6 : 0.847457627119
 Completed 0/55 images for user D&T
 Completed 20/55 images for user D&T
 Completed 40/55 images for user D&T
-Max f_measure for user D&T : 0.0673076923077
+Max f_measure for user D&T: 0.0673076923077. From precision = 0.0593220338983, recall = 0.0777777777778.
 F_measure for user 9 : 0.890756302521
-F_measure for user 10 : 0.816666666667
-F_measure for user 13 : 0.878048780488
+F_measure for user 10 : 0.8
+F_measure for user 13 : 0.910569105691
 F_measure for user 14 : 0.923076923077
-F_measure for user 15 : 0.923076923077
-F_measure for user 16 : 0.938461538462
-F_measure for user 17 : 0.928
-F_measure for user 18 : 0.900763358779
+F_measure for user 15 : 0.940170940171
+F_measure for user 16 : 0.907692307692
+F_measure for user 17 : 0.912
+F_measure for user 18 : 0.931297709924
 F_measure for user 19 : 0.805369127517
 F_measure for user 21 : 0.811188811189
 F_measure for user 22 : 0.878787878788
 F_measure for user 23 : 0.932203389831
-F_measure for user 24 : 0.534482758621
+F_measure for user 24 : 0.51724137931
 Completed 0/55 images for user RCNN
 Completed 20/55 images for user RCNN
 Completed 40/55 images for user RCNN
-Max f_measure for user RCNN : 0.191176470588
-F_measure for user 26 : 0.886956521739
+Max f_measure for user RCNN: 0.205882352941. From precision = 0.304347826087, recall = 0.155555555556.
+F_measure for user 26 : 0.939130434783
 F_measure for user 28 : 0.948275862069
 Completed 0/55 images for user DPM
 Completed 20/55 images for user DPM
 Completed 40/55 images for user DPM
-Max f_measure for user DPM : 0.534031413613
+Max f_measure for user DPM: 0.534031413613. From precision = 0.50495049505, recall = 0.566666666667.
 Completed 0/55 images for user POSELETS
 Completed 20/55 images for user POSELETS
 Completed 40/55 images for user POSELETS
-Max f_measure for user POSELETS : 0.425287356322
-Mean human f_measure (Method By Difficulty, bucket 3): 0.871949046235
-Median human f_measure (Method By Difficulty, bucket 3): 0.900763358779
-Mean human precision (Method By Difficulty, bucket 3): 0.854461796999
-Mean human recall (Method By Difficulty, bucket 3): 0.89424520731
+Max f_measure for user POSELETS: 0.425287356322. From precision = 0.440476190476, recall = 0.411111111111.
+Mean human f_measure (Method By Difficulty, bucket 3): 0.869268867109
+Median human f_measure (Method By Difficulty, bucket 3): 0.907692307692
+Mean human precision (Method By Difficulty, bucket 3): 0.851475586862
+Mean human recall (Method By Difficulty, bucket 3): 0.891848941784
 Median human precision (Method By Difficulty, bucket 3): 0.882352941176
-Median human recall (Method By Difficulty, bucket 3): 0.915254237288
+Median human recall (Method By Difficulty, bucket 3): 0.931034482759
 Evaluating bucket 4 (method By Difficulty)
 F_measure for user 3 : 0.915254237288
 F_measure for user 6 : 0.901960784314
 Completed 0/54 images for user D&T
 Completed 20/54 images for user D&T
 Completed 40/54 images for user D&T
-Max f_measure for user D&T : 0.0549635445878
+Max f_measure for user D&T: 0.0560852495794. From precision = 0.0295508274232, recall = 0.549450549451.
 F_measure for user 9 : 0.867924528302
-F_measure for user 10 : 0.722222222222
-F_measure for user 13 : 0.805555555556
-F_measure for user 14 : 0.872483221477
+F_measure for user 10 : 0.703703703704
+F_measure for user 13 : 0.819444444444
+F_measure for user 14 : 0.885906040268
 F_measure for user 15 : 0.888888888889
 F_measure for user 16 : 0.915492957746
 F_measure for user 17 : 0.836879432624
-F_measure for user 18 : 0.805031446541
-F_measure for user 19 : 0.913385826772
+F_measure for user 18 : 0.792452830189
+F_measure for user 19 : 0.897637795276
 F_measure for user 21 : 0.721088435374
 F_measure for user 22 : 0.909090909091
-F_measure for user 23 : 0.888888888889
+F_measure for user 23 : 0.905982905983
 F_measure for user 24 : 0.560747663551
 Completed 0/54 images for user RCNN
 Completed 20/54 images for user RCNN
 Completed 40/54 images for user RCNN
-Max f_measure for user RCNN : 0.236220472441
-F_measure for user 26 : 0.952380952381
-F_measure for user 28 : 0.916030534351
+Max f_measure for user RCNN: 0.236220472441. From precision = 0.416666666667, recall = 0.164835164835.
+F_measure for user 26 : 0.968253968254
+F_measure for user 28 : 0.931297709924
 Completed 0/54 images for user DPM
 Completed 20/54 images for user DPM
 Completed 40/54 images for user DPM
-Max f_measure for user DPM : 0.453038674033
+Max f_measure for user DPM: 0.453038674033. From precision = 0.455555555556, recall = 0.450549450549.
 Completed 0/54 images for user POSELETS
 Completed 20/54 images for user POSELETS
 Completed 40/54 images for user POSELETS
-Max f_measure for user POSELETS : 0.196581196581
-Mean human f_measure (Method By Difficulty, bucket 4): 0.846665087375
+Max f_measure for user POSELETS: 0.205882352941. From precision = 0.185840707965, recall = 0.230769230769.
+Mean human f_measure (Method By Difficulty, bucket 4): 0.848353366778
 Median human f_measure (Method By Difficulty, bucket 4): 0.888888888889
-Mean human precision (Method By Difficulty, bucket 4): 0.829049274404
-Mean human recall (Method By Difficulty, bucket 4): 0.87313105542
-Median human precision (Method By Difficulty, bucket 4): 0.892307692308
+Mean human precision (Method By Difficulty, bucket 4): 0.830823579113
+Mean human recall (Method By Difficulty, bucket 4): 0.874703199308
+Median human precision (Method By Difficulty, bucket 4): 0.884615384615
 Median human recall (Method By Difficulty, bucket 4): 0.898305084746
 Evaluating bucket 5 (method By Difficulty)
 F_measure for user 3 : 0.75
@@ -222,26 +222,26 @@ Completed 20/85 images for user D&T
 Completed 40/85 images for user D&T
 Completed 60/85 images for user D&T
 Completed 80/85 images for user D&T
-Max f_measure for user D&T : 0.0451875282422
-F_measure for user 9 : 0.755244755245
-F_measure for user 10 : 0.581081081081
-F_measure for user 13 : 0.952380952381
+Max f_measure for user D&T: 0.0452164323132. From precision = 0.023282226008, recall = 0.780952380952.
+F_measure for user 9 : 0.741258741259
+F_measure for user 10 : 0.567567567568
+F_measure for user 13 : 0.936507936508
 F_measure for user 14 : 0.652173913043
 F_measure for user 15 : 0.71186440678
-F_measure for user 16 : 0.744525547445
-F_measure for user 17 : 0.731343283582
+F_measure for user 16 : 0.729927007299
+F_measure for user 17 : 0.746268656716
 F_measure for user 18 : 0.766917293233
 F_measure for user 19 : 0.772727272727
-F_measure for user 21 : 0.679012345679
-F_measure for user 22 : 0.846153846154
-F_measure for user 23 : 0.83660130719
+F_measure for user 21 : 0.703703703704
+F_measure for user 22 : 0.833333333333
+F_measure for user 23 : 0.862745098039
 F_measure for user 24 : 0.458333333333
 Completed 0/85 images for user RCNN
 Completed 20/85 images for user RCNN
 Completed 40/85 images for user RCNN
 Completed 60/85 images for user RCNN
 Completed 80/85 images for user RCNN
-Max f_measure for user RCNN : 0.189189189189
+Max f_measure for user RCNN: 0.189189189189. From precision = 0.325581395349, recall = 0.133333333333.
 F_measure for user 26 : 0.87898089172
 F_measure for user 28 : 0.871794871795
 Completed 0/85 images for user DPM
@@ -249,73 +249,73 @@ Completed 20/85 images for user DPM
 Completed 40/85 images for user DPM
 Completed 60/85 images for user DPM
 Completed 80/85 images for user DPM
-Max f_measure for user DPM : 0.368131868132
+Max f_measure for user DPM: 0.368131868132. From precision = 0.258687258687, recall = 0.638095238095.
 Completed 0/85 images for user POSELETS
 Completed 20/85 images for user POSELETS
 Completed 40/85 images for user POSELETS
 Completed 60/85 images for user POSELETS
 Completed 80/85 images for user POSELETS
-Max f_measure for user POSELETS : 0.108045977011
-Mean human f_measure (Method By Difficulty, bucket 5): 0.754370584503
-Median human f_measure (Method By Difficulty, bucket 5): 0.755244755245
-Mean human precision (Method By Difficulty, bucket 5): 0.723766784097
-Mean human recall (Method By Difficulty, bucket 5): 0.796626057409
+Max f_measure for user POSELETS: 0.110344827586. From precision = 0.0627450980392, recall = 0.457142857143.
+Mean human f_measure (Method By Difficulty, bucket 5): 0.754074638954
+Median human f_measure (Method By Difficulty, bucket 5): 0.75
+Mean human precision (Method By Difficulty, bucket 5): 0.723322393159
+Mean human recall (Method By Difficulty, bucket 5): 0.796548165736
 Median human precision (Method By Difficulty, bucket 5): 0.724137931034
-Median human recall (Method By Difficulty, bucket 5): 0.833333333333
+Median human recall (Method By Difficulty, bucket 5): 0.83606557377
 Evaluating bucket 1 (method By Time (Equiwidth))
 F_measure for user 3 : 1.0
 F_measure for user 6 : 1.0
 Completed 0/50 images for user D&T
 Completed 20/50 images for user D&T
 Completed 40/50 images for user D&T
-Max f_measure for user D&T : 0.0625
+Max f_measure for user D&T: 0.0625. From precision = 0.0344827586207, recall = 0.333333333333.
 F_measure for user 9 : 0.955223880597
-F_measure for user 10 : 0.828571428571
+F_measure for user 10 : 0.771428571429
 F_measure for user 13 : 0.931506849315
 F_measure for user 14 : 0.918918918919
 F_measure for user 15 : 0.958904109589
-F_measure for user 16 : 0.948717948718
-F_measure for user 17 : 0.897435897436
+F_measure for user 16 : 0.923076923077
+F_measure for user 17 : 0.923076923077
 F_measure for user 18 : 0.988235294118
-F_measure for user 19 : 0.973684210526
+F_measure for user 19 : 0.947368421053
 F_measure for user 21 : 0.837209302326
-F_measure for user 22 : 0.961038961039
+F_measure for user 22 : 0.935064935065
 F_measure for user 23 : 1.0
 F_measure for user 24 : 0.535211267606
 Completed 0/50 images for user RCNN
 Completed 20/50 images for user RCNN
 Completed 40/50 images for user RCNN
-Max f_measure for user RCNN : 0.217821782178
+Max f_measure for user RCNN: 0.217821782178. From precision = 0.234042553191, recall = 0.203703703704.
 F_measure for user 26 : 1.0
 F_measure for user 28 : 0.986301369863
 Completed 0/50 images for user DPM
 Completed 20/50 images for user DPM
 Completed 40/50 images for user DPM
-Max f_measure for user DPM : 0.633333333333
+Max f_measure for user DPM: 0.633333333333. From precision = 0.575757575758, recall = 0.703703703704.
 Completed 0/50 images for user POSELETS
 Completed 20/50 images for user POSELETS
 Completed 40/50 images for user POSELETS
-Max f_measure for user POSELETS : 0.283464566929
-Mean human f_measure (Method By Time (Equiwidth), bucket 1): 0.924762319919
-Median human f_measure (Method By Time (Equiwidth), bucket 1): 0.958904109589
-Mean human precision (Method By Time (Equiwidth), bucket 1): 0.909736744625
-Mean human recall (Method By Time (Equiwidth), bucket 1): 0.942034307378
-Median human precision (Method By Time (Equiwidth), bucket 1): 0.969696969697
-Median human recall (Method By Time (Equiwidth), bucket 1): 0.973684210526
+Max f_measure for user POSELETS: 0.283464566929. From precision = 0.246575342466, recall = 0.333333333333.
+Mean human f_measure (Method By Time (Equiwidth), bucket 1): 0.918325103884
+Median human f_measure (Method By Time (Equiwidth), bucket 1): 0.947368421053
+Mean human precision (Method By Time (Equiwidth), bucket 1): 0.903448355532
+Mean human recall (Method By Time (Equiwidth), bucket 1): 0.93543628703
+Median human precision (Method By Time (Equiwidth), bucket 1): 0.947368421053
+Median human recall (Method By Time (Equiwidth), bucket 1): 0.947368421053
 Evaluating bucket 2 (method By Time (Equiwidth))
 F_measure for user 3 : 0.853333333333
-F_measure for user 6 : 0.947368421053
+F_measure for user 6 : 0.921052631579
 Completed 0/100 images for user D&T
 Completed 20/100 images for user D&T
 Completed 40/100 images for user D&T
 Completed 60/100 images for user D&T
 Completed 80/100 images for user D&T
-Max f_measure for user D&T : 0.0555555555556
-F_measure for user 9 : 0.872727272727
-F_measure for user 10 : 0.714285714286
-F_measure for user 13 : 0.98064516129
+Max f_measure for user D&T: 0.0555555555556. From precision = 0.0403225806452, recall = 0.0892857142857.
+F_measure for user 9 : 0.884848484848
+F_measure for user 10 : 0.702380952381
+F_measure for user 13 : 0.967741935484
 F_measure for user 14 : 0.892857142857
-F_measure for user 15 : 0.87074829932
+F_measure for user 15 : 0.884353741497
 F_measure for user 16 : 0.838323353293
 F_measure for user 17 : 0.838709677419
 F_measure for user 18 : 0.887323943662
@@ -329,7 +329,7 @@ Completed 20/100 images for user RCNN
 Completed 40/100 images for user RCNN
 Completed 60/100 images for user RCNN
 Completed 80/100 images for user RCNN
-Max f_measure for user RCNN : 0.294117647059
+Max f_measure for user RCNN: 0.294117647059. From precision = 0.431034482759, recall = 0.223214285714.
 F_measure for user 26 : 0.924137931034
 F_measure for user 28 : 0.954248366013
 Completed 0/100 images for user DPM
@@ -337,35 +337,35 @@ Completed 20/100 images for user DPM
 Completed 40/100 images for user DPM
 Completed 60/100 images for user DPM
 Completed 80/100 images for user DPM
-Max f_measure for user DPM : 0.512396694215
+Max f_measure for user DPM: 0.512396694215. From precision = 0.476923076923, recall = 0.553571428571.
 Completed 0/100 images for user POSELETS
 Completed 20/100 images for user POSELETS
 Completed 40/100 images for user POSELETS
 Completed 60/100 images for user POSELETS
 Completed 80/100 images for user POSELETS
-Max f_measure for user POSELETS : 0.303664921466
-Mean human f_measure (Method By Time (Equiwidth), bucket 2): 0.866852104592
-Median human f_measure (Method By Time (Equiwidth), bucket 2): 0.872727272727
-Mean human precision (Method By Time (Equiwidth), bucket 2): 0.83670633787
-Mean human recall (Method By Time (Equiwidth), bucket 2): 0.903095729183
+Max f_measure for user POSELETS: 0.303664921466. From precision = 0.367088607595, recall = 0.258928571429.
+Mean human f_measure (Method By Time (Equiwidth), bucket 2): 0.865358156187
+Median human f_measure (Method By Time (Equiwidth), bucket 2): 0.884848484848
+Mean human precision (Method By Time (Equiwidth), bucket 2): 0.835232794786
+Mean human recall (Method By Time (Equiwidth), bucket 2): 0.901579650016
 Median human precision (Method By Time (Equiwidth), bucket 2): 0.86301369863
-Median human recall (Method By Time (Equiwidth), bucket 2): 0.933333333333
+Median human recall (Method By Time (Equiwidth), bucket 2): 0.930555555556
 Evaluating bucket 3 (method By Time (Equiwidth))
-F_measure for user 3 : 0.927536231884
-F_measure for user 6 : 0.852941176471
+F_measure for user 3 : 0.898550724638
+F_measure for user 6 : 0.882352941176
 Completed 0/51 images for user D&T
 Completed 20/51 images for user D&T
 Completed 40/51 images for user D&T
-Max f_measure for user D&T : 0.0502933780386
-F_measure for user 9 : 0.846846846847
+Max f_measure for user D&T: 0.0502933780386. From precision = 0.0272727272727, recall = 0.322580645161.
+F_measure for user 9 : 0.864864864865
 F_measure for user 10 : 0.655737704918
-F_measure for user 13 : 0.846153846154
+F_measure for user 13 : 0.861538461538
 F_measure for user 14 : 0.666666666667
 F_measure for user 15 : 0.789473684211
-F_measure for user 16 : 0.834532374101
+F_measure for user 16 : 0.820143884892
 F_measure for user 17 : 0.802919708029
-F_measure for user 18 : 0.838235294118
-F_measure for user 19 : 0.848
+F_measure for user 18 : 0.808823529412
+F_measure for user 19 : 0.832
 F_measure for user 21 : 0.721088435374
 F_measure for user 22 : 0.876923076923
 F_measure for user 23 : 0.875
@@ -373,61 +373,61 @@ F_measure for user 24 : 0.423728813559
 Completed 0/51 images for user RCNN
 Completed 20/51 images for user RCNN
 Completed 40/51 images for user RCNN
-Max f_measure for user RCNN : 0.2
+Max f_measure for user RCNN: 0.2. From precision = 0.297872340426, recall = 0.150537634409.
 F_measure for user 26 : 0.903703703704
 F_measure for user 28 : 0.893939393939
 Completed 0/51 images for user DPM
 Completed 20/51 images for user DPM
 Completed 40/51 images for user DPM
-Max f_measure for user DPM : 0.342281879195
+Max f_measure for user DPM: 0.356020942408. From precision = 0.34693877551, recall = 0.365591397849.
 Completed 0/51 images for user POSELETS
 Completed 20/51 images for user POSELETS
 Completed 40/51 images for user POSELETS
-Max f_measure for user POSELETS : 0.196428571429
-Mean human f_measure (Method By Time (Equiwidth), bucket 3): 0.8002015857
-Median human f_measure (Method By Time (Equiwidth), bucket 3): 0.846153846154
-Mean human precision (Method By Time (Equiwidth), bucket 3): 0.782046687857
-Mean human recall (Method By Time (Equiwidth), bucket 3): 0.824356066308
-Median human precision (Method By Time (Equiwidth), bucket 3): 0.828125
-Median human recall (Method By Time (Equiwidth), bucket 3): 0.859375
+Max f_measure for user POSELETS: 0.196428571429. From precision = 0.167938931298, recall = 0.236559139785.
+Mean human f_measure (Method By Time (Equiwidth), bucket 3): 0.798673858461
+Median human f_measure (Method By Time (Equiwidth), bucket 3): 0.832
+Mean human precision (Method By Time (Equiwidth), bucket 3): 0.780815784225
+Mean human recall (Method By Time (Equiwidth), bucket 3): 0.822491946526
+Median human precision (Method By Time (Equiwidth), bucket 3): 0.8125
+Median human recall (Method By Time (Equiwidth), bucket 3): 0.857142857143
 Evaluating bucket 4 (method By Time (Equiwidth))
 F_measure for user 3 : 0.736842105263
-F_measure for user 6 : 0.727272727273
+F_measure for user 6 : 0.636363636364
 Completed 0/15 images for user D&T
-Max f_measure for user D&T : 0.0771704180064
+Max f_measure for user D&T: 0.0836012861736. From precision = 0.045534150613, recall = 0.509803921569.
 F_measure for user 9 : 0.654545454545
 F_measure for user 10 : 0.666666666667
 F_measure for user 13 : 0.717948717949
-F_measure for user 14 : 0.857142857143
+F_measure for user 14 : 0.935064935065
 F_measure for user 15 : 0.88
 F_measure for user 16 : 0.888888888889
-F_measure for user 17 : 0.891891891892
-F_measure for user 18 : 0.68
-F_measure for user 19 : 0.686868686869
+F_measure for user 17 : 0.810810810811
+F_measure for user 18 : 0.7
+F_measure for user 19 : 0.707070707071
 F_measure for user 21 : 0.68085106383
 F_measure for user 22 : 0.8
-F_measure for user 23 : 0.833333333333
-F_measure for user 24 : 0.451612903226
+F_measure for user 23 : 0.805555555556
+F_measure for user 24 : 0.41935483871
 Completed 0/15 images for user RCNN
-Max f_measure for user RCNN : 0.194174757282
+Max f_measure for user RCNN: 0.194174757282. From precision = 0.192307692308, recall = 0.196078431373.
 F_measure for user 26 : 0.901408450704
 F_measure for user 28 : 0.901408450704
 Completed 0/15 images for user DPM
-Max f_measure for user DPM : 0.328767123288
+Max f_measure for user DPM: 0.328767123288. From precision = 0.545454545455, recall = 0.235294117647.
 Completed 0/15 images for user POSELETS
-Max f_measure for user POSELETS : 0.459770114943
-Mean human f_measure (Method By Time (Equiwidth), bucket 4): 0.76215777637
+Max f_measure for user POSELETS: 0.459770114943. From precision = 0.555555555556, recall = 0.392156862745.
+Mean human f_measure (Method By Time (Equiwidth), bucket 4): 0.755457663654
 Median human f_measure (Method By Time (Equiwidth), bucket 4): 0.736842105263
-Mean human precision (Method By Time (Equiwidth), bucket 4): 0.748742591525
-Mean human recall (Method By Time (Equiwidth), bucket 4): 0.796192961937
+Mean human precision (Method By Time (Equiwidth), bucket 4): 0.739671074495
+Mean human recall (Method By Time (Equiwidth), bucket 4): 0.791498823341
 Median human precision (Method By Time (Equiwidth), bucket 4): 0.755555555556
-Median human recall (Method By Time (Equiwidth), bucket 4): 0.868421052632
+Median human recall (Method By Time (Equiwidth), bucket 4): 0.85
 Evaluating bucket 5 (method By Time (Equiwidth))
 F_measure for user 3 : 0.631578947368
 F_measure for user 6 : 0.533333333333
 Completed 0/2 images for user D&T
-Max f_measure for user D&T : 0.0625
-F_measure for user 9 : 0.285714285714
+Max f_measure for user D&T: 0.0625. From precision = 0.0350877192982, recall = 0.285714285714.
+F_measure for user 9 : 0.428571428571
 F_measure for user 10 : 0.2
 F_measure for user 13 : Not Enough Data
 F_measure for user 14 : Not Enough Data
@@ -441,17 +441,17 @@ F_measure for user 22 : 0.666666666667
 F_measure for user 23 : 0.533333333333
 F_measure for user 24 : 0.166666666667
 Completed 0/2 images for user RCNN
-Max f_measure for user RCNN : 0.0106007067138
+Max f_measure for user RCNN: 0.0106007067138. From precision = 0.00536672629696, recall = 0.428571428571.
 F_measure for user 26 : 0.8
 F_measure for user 28 : 0.625
 Completed 0/2 images for user DPM
-Max f_measure for user DPM : 0.545454545455
+Max f_measure for user DPM: 0.545454545455. From precision = 0.75, recall = 0.428571428571.
 Completed 0/2 images for user POSELETS
-Max f_measure for user POSELETS : 0.307692307692
-Mean human f_measure (Method By Time (Equiwidth), bucket 5): 0.537178172704
+Max f_measure for user POSELETS: 0.307692307692. From precision = 0.333333333333, recall = 0.285714285714.
+Mean human f_measure (Method By Time (Equiwidth), bucket 5): 0.550165185692
 Median human f_measure (Method By Time (Equiwidth), bucket 5): 0.625
-Mean human precision (Method By Time (Equiwidth), bucket 5): 0.540442890443
-Mean human recall (Method By Time (Equiwidth), bucket 5): 0.620851370851
+Mean human precision (Method By Time (Equiwidth), bucket 5): 0.558624708625
+Mean human recall (Method By Time (Equiwidth), bucket 5): 0.630952380952
 Median human precision (Method By Time (Equiwidth), bucket 5): 0.5
 Median human recall (Method By Time (Equiwidth), bucket 5): 0.666666666667
 Evaluating bucket 1 (method By Time (Equidepth))
@@ -460,47 +460,47 @@ F_measure for user 6 : 1.0
 Completed 0/44 images for user D&T
 Completed 20/44 images for user D&T
 Completed 40/44 images for user D&T
-Max f_measure for user D&T : 0.0642857142857
+Max f_measure for user D&T: 0.0642857142857. From precision = 0.0350877192982, recall = 0.382978723404.
 F_measure for user 9 : 0.943396226415
-F_measure for user 10 : 0.821428571429
-F_measure for user 13 : 0.918032786885
+F_measure for user 10 : 0.75
+F_measure for user 13 : 0.950819672131
 F_measure for user 14 : 0.909090909091
 F_measure for user 15 : 0.953846153846
 F_measure for user 16 : 0.942857142857
 F_measure for user 17 : 0.885714285714
-F_measure for user 18 : 0.987012987013
-F_measure for user 19 : 0.971428571429
-F_measure for user 21 : 0.833333333333
-F_measure for user 22 : 0.931506849315
+F_measure for user 18 : 0.961038961039
+F_measure for user 19 : 0.942857142857
+F_measure for user 21 : 0.857142857143
+F_measure for user 22 : 0.958904109589
 F_measure for user 23 : 1.0
 F_measure for user 24 : 0.539682539683
 Completed 0/44 images for user RCNN
 Completed 20/44 images for user RCNN
 Completed 40/44 images for user RCNN
-Max f_measure for user RCNN : 0.197802197802
+Max f_measure for user RCNN: 0.197802197802. From precision = 0.204545454545, recall = 0.191489361702.
 F_measure for user 26 : 1.0
 F_measure for user 28 : 0.984615384615
 Completed 0/44 images for user DPM
 Completed 20/44 images for user DPM
 Completed 40/44 images for user DPM
-Max f_measure for user DPM : 0.640776699029
+Max f_measure for user DPM: 0.640776699029. From precision = 0.589285714286, recall = 0.702127659574.
 Completed 0/44 images for user POSELETS
 Completed 20/44 images for user POSELETS
 Completed 40/44 images for user POSELETS
-Max f_measure for user POSELETS : 0.251851851852
-Mean human f_measure (Method By Time (Equidepth), bucket 1): 0.918937984801
-Median human f_measure (Method By Time (Equidepth), bucket 1): 0.943396226415
-Mean human precision (Method By Time (Equidepth), bucket 1): 0.902770462463
-Mean human recall (Method By Time (Equidepth), bucket 1): 0.937659867674
-Median human precision (Method By Time (Equidepth), bucket 1): 0.961538461538
-Median human recall (Method By Time (Equidepth), bucket 1): 0.967741935484
+Max f_measure for user POSELETS: 0.251851851852. From precision = 0.193181818182, recall = 0.36170212766.
+Mean human f_measure (Method By Time (Equidepth), bucket 1): 0.916468552058
+Median human f_measure (Method By Time (Equidepth), bucket 1): 0.950819672131
+Mean human precision (Method By Time (Equidepth), bucket 1): 0.900263622218
+Mean human recall (Method By Time (Equidepth), bucket 1): 0.935258505675
+Median human precision (Method By Time (Equidepth), bucket 1): 0.945945945946
+Median human recall (Method By Time (Equidepth), bucket 1): 0.972222222222
 Evaluating bucket 2 (method By Time (Equidepth))
 F_measure for user 3 : 0.933333333333
 F_measure for user 6 : 0.971428571429
 Completed 0/43 images for user D&T
 Completed 20/43 images for user D&T
 Completed 40/43 images for user D&T
-Max f_measure for user D&T : 0.0629921259843
+Max f_measure for user D&T: 0.0629921259843. From precision = 0.0493827160494, recall = 0.0869565217391.
 F_measure for user 9 : 0.9
 F_measure for user 10 : 0.702702702703
 F_measure for user 13 : 0.967741935484
@@ -517,17 +517,17 @@ F_measure for user 24 : 0.607142857143
 Completed 0/43 images for user RCNN
 Completed 20/43 images for user RCNN
 Completed 40/43 images for user RCNN
-Max f_measure for user RCNN : 0.228571428571
+Max f_measure for user RCNN: 0.228571428571. From precision = 0.333333333333, recall = 0.173913043478.
 F_measure for user 26 : 0.962962962963
 F_measure for user 28 : 0.949152542373
 Completed 0/43 images for user DPM
 Completed 20/43 images for user DPM
 Completed 40/43 images for user DPM
-Max f_measure for user DPM : 0.539325842697
+Max f_measure for user DPM: 0.539325842697. From precision = 0.558139534884, recall = 0.521739130435.
 Completed 0/43 images for user POSELETS
 Completed 20/43 images for user POSELETS
 Completed 40/43 images for user POSELETS
-Max f_measure for user POSELETS : 0.390804597701
+Max f_measure for user POSELETS: 0.390804597701. From precision = 0.414634146341, recall = 0.369565217391.
 Mean human f_measure (Method By Time (Equidepth), bucket 2): 0.893627937953
 Median human f_measure (Method By Time (Equidepth), bucket 2): 0.928571428571
 Mean human precision (Method By Time (Equidepth), bucket 2): 0.860427834219
@@ -540,7 +540,7 @@ F_measure for user 6 : 0.918918918919
 Completed 0/44 images for user D&T
 Completed 20/44 images for user D&T
 Completed 40/44 images for user D&T
-Max f_measure for user D&T : 0.0714285714286
+Max f_measure for user D&T: 0.0714285714286. From precision = 0.05, recall = 0.125.
 F_measure for user 9 : 0.885245901639
 F_measure for user 10 : 0.707692307692
 F_measure for user 13 : 1.0
@@ -557,17 +557,17 @@ F_measure for user 24 : 0.65671641791
 Completed 0/44 images for user RCNN
 Completed 20/44 images for user RCNN
 Completed 40/44 images for user RCNN
-Max f_measure for user RCNN : 0.388888888889
+Max f_measure for user RCNN: 0.388888888889. From precision = 0.583333333333, recall = 0.291666666667.
 F_measure for user 26 : 0.939393939394
 F_measure for user 28 : 0.972222222222
 Completed 0/44 images for user DPM
 Completed 20/44 images for user DPM
 Completed 40/44 images for user DPM
-Max f_measure for user DPM : 0.490566037736
+Max f_measure for user DPM: 0.490566037736. From precision = 0.448275862069, recall = 0.541666666667.
 Completed 0/44 images for user POSELETS
 Completed 20/44 images for user POSELETS
 Completed 40/44 images for user POSELETS
-Max f_measure for user POSELETS : 0.290322580645
+Max f_measure for user POSELETS: 0.290322580645. From precision = 0.642857142857, recall = 0.1875.
 Mean human f_measure (Method By Time (Equidepth), bucket 3): 0.85897898905
 Median human f_measure (Method By Time (Equidepth), bucket 3): 0.857142857143
 Mean human precision (Method By Time (Equidepth), bucket 3): 0.831004887314
@@ -580,77 +580,77 @@ F_measure for user 6 : 0.916666666667
 Completed 0/43 images for user D&T
 Completed 20/43 images for user D&T
 Completed 40/43 images for user D&T
-Max f_measure for user D&T : 0.046511627907
+Max f_measure for user D&T: 0.043729903537. From precision = 0.0227424749164, recall = 0.566666666667.
 F_measure for user 9 : 0.850574712644
 F_measure for user 10 : 0.66
-F_measure for user 13 : 0.911111111111
-F_measure for user 14 : 0.697247706422
+F_measure for user 13 : 0.933333333333
+F_measure for user 14 : 0.678899082569
 F_measure for user 15 : 0.826086956522
-F_measure for user 16 : 0.776699029126
+F_measure for user 16 : 0.796116504854
 F_measure for user 17 : 0.8
 F_measure for user 18 : 0.842105263158
 F_measure for user 19 : 0.888888888889
-F_measure for user 21 : 0.74
+F_measure for user 21 : 0.7
 F_measure for user 22 : 0.935064935065
 F_measure for user 23 : 0.921052631579
 F_measure for user 24 : 0.491803278689
 Completed 0/43 images for user RCNN
 Completed 20/43 images for user RCNN
 Completed 40/43 images for user RCNN
-Max f_measure for user RCNN : 0.232558139535
-F_measure for user 26 : 0.921052631579
-F_measure for user 28 : 0.78125
+Max f_measure for user RCNN: 0.232558139535. From precision = 0.384615384615, recall = 0.166666666667.
+F_measure for user 26 : 0.894736842105
+F_measure for user 28 : 0.8125
 Completed 0/43 images for user DPM
 Completed 20/43 images for user DPM
 Completed 40/43 images for user DPM
-Max f_measure for user DPM : 0.442748091603
+Max f_measure for user DPM: 0.458015267176. From precision = 0.422535211268, recall = 0.5.
 Completed 0/43 images for user POSELETS
 Completed 20/43 images for user POSELETS
 Completed 40/43 images for user POSELETS
-Max f_measure for user POSELETS : 0.260869565217
-Mean human f_measure (Method By Time (Equidepth), bucket 4): 0.816951484707
+Max f_measure for user POSELETS: 0.260869565217. From precision = 0.375, recall = 0.2.
+Mean human f_measure (Method By Time (Equidepth), bucket 4): 0.816258854391
 Median human f_measure (Method By Time (Equidepth), bucket 4): 0.842105263158
-Mean human precision (Method By Time (Equidepth), bucket 4): 0.796365877919
-Mean human recall (Method By Time (Equidepth), bucket 4): 0.846258069534
+Mean human precision (Method By Time (Equidepth), bucket 4): 0.796117881134
+Mean human recall (Method By Time (Equidepth), bucket 4): 0.84490337353
 Median human precision (Method By Time (Equidepth), bucket 4): 0.863636363636
-Median human recall (Method By Time (Equidepth), bucket 4): 0.891304347826
+Median human recall (Method By Time (Equidepth), bucket 4): 0.875
 Evaluating bucket 5 (method By Time (Equidepth))
-F_measure for user 3 : 0.814814814815
-F_measure for user 6 : 0.791208791209
+F_measure for user 3 : 0.796296296296
+F_measure for user 6 : 0.747252747253
 Completed 0/44 images for user D&T
 Completed 20/44 images for user D&T
 Completed 40/44 images for user D&T
-Max f_measure for user D&T : 0.0633074935401
+Max f_measure for user D&T: 0.0658914728682. From precision = 0.0356145251397, recall = 0.439655172414.
 F_measure for user 9 : 0.732824427481
-F_measure for user 10 : 0.666666666667
-F_measure for user 13 : 0.761290322581
-F_measure for user 14 : 0.782051282051
-F_measure for user 15 : 0.838235294118
-F_measure for user 16 : 0.868421052632
-F_measure for user 17 : 0.812903225806
+F_measure for user 10 : 0.650793650794
+F_measure for user 13 : 0.748387096774
+F_measure for user 14 : 0.807692307692
+F_measure for user 15 : 0.823529411765
+F_measure for user 16 : 0.881578947368
+F_measure for user 17 : 0.825806451613
 F_measure for user 18 : 0.777142857143
-F_measure for user 19 : 0.77094972067
-F_measure for user 21 : 0.710382513661
+F_measure for user 19 : 0.748603351955
+F_measure for user 21 : 0.699453551913
 F_measure for user 22 : 0.806451612903
-F_measure for user 23 : 0.833333333333
+F_measure for user 23 : 0.809523809524
 F_measure for user 24 : 0.418300653595
 Completed 0/44 images for user RCNN
 Completed 20/44 images for user RCNN
 Completed 40/44 images for user RCNN
-Max f_measure for user RCNN : 0.187919463087
-F_measure for user 26 : 0.897727272727
+Max f_measure for user RCNN: 0.187919463087. From precision = 0.424242424242, recall = 0.120689655172.
+F_measure for user 26 : 0.863636363636
 F_measure for user 28 : 0.886486486486
 Completed 0/44 images for user DPM
 Completed 20/44 images for user DPM
 Completed 40/44 images for user DPM
-Max f_measure for user DPM : 0.338164251208
+Max f_measure for user DPM: 0.341013824885. From precision = 0.366336633663, recall = 0.318965517241.
 Completed 0/44 images for user POSELETS
 Completed 20/44 images for user POSELETS
 Completed 40/44 images for user POSELETS
-Max f_measure for user POSELETS : 0.308370044053
-Mean human f_measure (Method By Time (Equidepth), bucket 5): 0.774658254581
-Median human f_measure (Method By Time (Equidepth), bucket 5): 0.791208791209
-Mean human precision (Method By Time (Equidepth), bucket 5): 0.754141693943
-Mean human recall (Method By Time (Equidepth), bucket 5): 0.807398775174
+Max f_measure for user POSELETS: 0.299559471366. From precision = 0.306306306306, recall = 0.293103448276.
+Mean human f_measure (Method By Time (Equidepth), bucket 5): 0.766103530835
+Median human f_measure (Method By Time (Equidepth), bucket 5): 0.796296296296
+Mean human precision (Method By Time (Equidepth), bucket 5): 0.745475347703
+Mean human recall (Method By Time (Equidepth), bucket 5): 0.798820464404
 Median human precision (Method By Time (Equidepth), bucket 5): 0.757575757576
-Median human recall (Method By Time (Equidepth), bucket 5): 0.84
+Median human recall (Method By Time (Equidepth), bucket 5): 0.840579710145

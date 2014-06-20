@@ -195,10 +195,18 @@ def eval_algorithms(bucket, human_annotations, algorithms):
 
         # Compute a user-specific F-measure
         if userid in algorithms:
-            fmeasures = [f_measure(tp, fp, num_p)
-                         for tp, fp, num_p in zip(tps, fps, npos)]
-            max_fmeasure = max(fmeasures)
-            print "Max f_measure for user", userid, ":", max_fmeasure
+            fmeasure_args = zip(tps, fps, npos)
+            fmeasures = {}
+            for args in fmeasure_args:
+                fmeasures[f_measure(*args)] = args
+            max_fmeasure = max(fmeasures.keys())
+            source_tp, source_fp, source_np = fmeasures[max_fmeasure]
+            source_prec = float(source_tp) / (float(source_tp)
+                                              + float(source_fp))
+            source_recall = float(source_tp) / float(source_np)
+            print ("Max f_measure for user " + userid + ": " + str(max_fmeasure)
+                   + ". From precision = " + str(source_prec) + ", recall = "
+                   + str(source_recall) + ".")
             plot_prec_recall(tps, fps, npos,
                              ("Precision-Recall Curve for user " + userid
                               + "\n(Method " + bucket.method + " Bucket "
